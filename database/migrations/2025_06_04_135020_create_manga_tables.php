@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('libelle');
             $table->string('path');
-            $table->integer('price');
+            $table->decimal('price', 10, 0);
             $table->string('age');
             $table->text('description');
             $table->timestamps();

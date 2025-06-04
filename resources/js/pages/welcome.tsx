@@ -1,6 +1,8 @@
 import { Head, usePage } from '@inertiajs/react';
+import Form from '@/components/form';
 type Articles = {
     title: string;
+    path: string;
 }
 export default function Welcome() {
     const { articles } = usePage<{articles: Articles[]}>().props;
@@ -12,8 +14,14 @@ export default function Welcome() {
                 <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
             </Head>
             <h1>Page d'accueil</h1>
+            <Form />
             {articles.map((article, index) => (
-                <p key={index}>{article.title}</p>
+                <div key={index}>
+                    <p>{article.title}</p>
+                    {article.path && (
+                        <img src={`/storage/${article.path.replace('public/', '')}`} alt={article.title}/>
+                    )}
+                </div>
             ))}
         </div>
     );
