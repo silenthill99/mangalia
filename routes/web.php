@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    $articles = Manga::select("title", "path")->get();
+    $articles = Manga::all();
     return Inertia::render('welcome', [
         'articles' => $articles
     ]);
@@ -43,7 +43,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::get('admin', function () {
-    return Inertia::render('admin');
+    $articles = Manga::all();
+    return Inertia::render('admin', [
+        'articles' => $articles
+    ]);
 })->name('admin');
 
 require __DIR__ . '/settings.php';

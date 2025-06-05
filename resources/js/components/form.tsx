@@ -42,7 +42,7 @@ const Form = () => {
                         setPreview(URL.createObjectURL(file)); // pour afficher l'aperçu
                     }
                 }}
-            />
+            /><br/>
             <input
                 type="text"
                 name={"title"}
@@ -82,6 +82,7 @@ const Form = () => {
                 required
                 value={data.description}
                 onChange={(e) => setData("description", e.target.value)}
+                className={"border resize-none focus:outline-none"}
             ></textarea><br/>
             <input type="submit" value="Envoyer" />
         </form>
