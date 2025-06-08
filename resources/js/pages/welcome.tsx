@@ -1,5 +1,6 @@
 import { Head, usePage } from '@inertiajs/react';
 type Articles = {
+    id: number;
     title: string;
     path: string;
     price: number;
@@ -23,7 +24,7 @@ export default function Welcome() {
                             <img src={`/storage/${article.path.replace('public/', '')}`} alt={article.title} className={"w-full h-3/4 object-cover rounded-t-3xl"}/>
                             <figcaption className={"min-h-1/4 p-5 flex flex-col justify-between"}>
                                 <p className={'text-3xl'}>{article.title}</p>
-                                <a href="">Voir plus de détails</a>
+                                <a href={route('sujet', article.id)}>Voir plus de détails</a>
                                 <p className={"absolute top-5 left-0 right-3/4 bg-orange-500 text-white text-center"}>Prix : {article.price} €</p>
                             </figcaption>
                         </figure>

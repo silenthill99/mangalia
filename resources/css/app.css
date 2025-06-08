@@ -34,6 +34,7 @@
     --color-muted-foreground: var(--muted-foreground);
 
     --color-accent: var(--accent);
+    --color-accent-bis: oklch(77% 0.152 181.912);
     --color-accent-foreground: var(--accent-foreground);
 
     --color-destructive: var(--destructive);
