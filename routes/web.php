@@ -39,16 +39,12 @@ Route::post('/', function (Request $request) {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
+        $articles = Manga::all();
+        return Inertia::render('dashboard',
+        ['articles' => $articles]);
     })->name('dashboard');
 });
 
-Route::get('admin', function () {
-    $articles = Manga::all();
-    return Inertia::render('admin', [
-        'articles' => $articles
-    ]);
-})->name('admin');
 
 Route::get('sujet/{id}', function ($id) {
 

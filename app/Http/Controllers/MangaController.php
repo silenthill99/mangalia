@@ -74,6 +74,6 @@ class MangaController extends Controller
 
         $manga->update($validated);
 
-        return redirect()->route('admin');
+        return redirect()->route('dashboard');
     }
 }
