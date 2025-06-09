@@ -47,4 +47,33 @@ class MangaController extends Controller
         return redirect()->route('admin')->with('success', "Article supprimé");
     }
 
+    public function edit($id)
+    {
+        $manga = Manga::findOrFail($id);
+
+        return Inertia::render('update', ['manga' => $manga]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $manga = Manga::findOrFail($id);
+
+        $validated =  $request->validate([
+            'title' => 'required|string|max:255',
+            'price' => 'required|numeric|min:0',
+            'age' => 'required|string',
+            'description' => 'required|string',
+            'image' => 'nullable|image|max:8000',
+        ]);
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName =  time() . '_' . $image->getClientOriginalName(); // ex: 1717861245_cover.jpg
+            $validated['path'] = $image->storeAs('images', $imageName, 'public');
+        }
+
+        $manga->update($validated);
+
+        return redirect()->route('admin');
+    }
 }
