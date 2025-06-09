@@ -53,7 +53,7 @@ const Admin = () => {
                                     <TableCell>
                                         <ul className={"flex justify-center gap-2"}>
                                             <li><Link href={route("sujet", article.id)}>Voir</Link></li>
-                                            <li><a href="">Modifier</a></li>
+                                            <li><Link href={route("update", article.id)}>Modifier</Link></li>
                                             <li>
                                                 <button
                                                     onClick={() => {

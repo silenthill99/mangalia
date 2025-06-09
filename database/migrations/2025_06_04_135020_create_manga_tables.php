@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('mangas', function (Blueprint $table) {
             $table->id()->primary();
             $table->string('title');
-            $table->string('libelle');
             $table->string('path');
             $table->decimal('price', 10, 0);
             $table->string('age');

@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\MangaController;
 use App\Models\Manga;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -54,9 +53,11 @@ Route::get('admin', function () {
 Route::get('sujet/{id}', function ($id) {
 
     $art = Manga::find($id);
+    $menu = Manga::all();
 
     return Inertia::render('sujet', [
-        'article' => $art
+        'article' => $art,
+        'menu' => $menu
     ]);
 })->name('sujet');
 
@@ -66,6 +67,9 @@ Route::delete('/admin-delete/{id}', [MangaController::class, "destroy"])->name('
 Route::get("/ajout", [MangaController::class, "ajout"])->name("ajout");
 
 Route::post("/ajout", [MangaController::class, "store"])->name("ajout");
+
+Route::get("/update/{id}", [MangaController::class, "edit"])->name("edit");
+Route::put("/update/{id}", [MangaController::class, "update"])->name("update");
 
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';
