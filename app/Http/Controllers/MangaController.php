@@ -23,6 +23,8 @@ class MangaController extends Controller
             'age' => 'required|string|max:255',
             'description' => 'required|string',
             'image' => 'required|image|max:8000',
+        ], [
+            'image.required' => "Tu dois choisir une image pour valider l'envoi du formulaire"
         ]);
 
         $image = $request->file('image');
@@ -43,5 +45,49 @@ class MangaController extends Controller
     function destroy ($id): RedirectResponse {
         Manga::destroy($id);
         return redirect()->route('admin')->with('success', "Article supprimé");
+    }
+
+    function edit($id) {
+        $article = Manga::findOrFail($id);
+
+        return Inertia::render('update', ['article' => $article]);
+    }
+
+    function update($id, Request $request) {
+
+        // IMPORTANT : forcer Laravel à récupérer les bons champs pour une requête PUT + multipart
+        $data = $request->only(['title', 'price', 'age', 'description']);
+
+        // Validation
+        $validated = validator(
+            array_merge($data, ['image' => $request->file('image')]),
+            [
+                'title' => 'required|string|max:255',
+                'price' => 'required|numeric|min:0',
+                'age' => 'required|string|max:255',
+                'description' => 'required|string',
+                'image' => 'nullable|image|max:8000',
+            ]
+        )->validate();
+
+        // Récupération de l'article
+        $manga = Manga::findOrFail($id);
+
+        // Mise à jour de l'image si elle a été changée
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $validated['path'] = $image->storeAs('images', $imageName, 'public');
+        }
+
+        $manga->update([
+            'title' => $validated['title'],
+            'price' => $validated['price'],
+            'age' => $validated['age'],
+            'description' => $validated['description'],
+            'path' => $validated['path'] ?? $manga->path, // garde l'ancienne si aucune nouvelle
+        ]);
+
+        return redirect()->route('admin')->with('success', 'Manga mis à jour.');
     }
 }
