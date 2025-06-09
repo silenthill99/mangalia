@@ -68,8 +68,5 @@ Route::get("/ajout", [MangaController::class, "ajout"])->name("ajout");
 
 Route::post("/ajout", [MangaController::class, "store"])->name("ajout");
 
-Route::get("/update/{id}", [MangaController::class, "edit"])->name("edit");
-Route::put("/update/{id}", [MangaController::class, "update"])->name("update");
-
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';
