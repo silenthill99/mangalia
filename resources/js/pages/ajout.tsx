@@ -36,64 +36,70 @@ const Ajout = () => {
         <div className={'container mx-auto flex min-h-screen items-center justify-center'}>
             <Head title={'Ajouter un article'} />
             <form onSubmit={handleSubmit} action="" method="post" className={'my-5 w-9/10 rounded border border-gray-300 p-5 md:w-auto'}>
-                <label htmlFor="title">Ajouter un titre</label>
-                <input
-                    type="text"
-                    name={'title'}
-                    id={'title'}
-                    placeholder={"Titre de l'article"}
-                    className={'ml-2 border border-gray-300 focus:outline-none'}
-                    value={data.title}
-                    onChange={(e) => setData('title', e.target.value)}
-                    required
-                />
-                <br />
-                <br />
-                <label htmlFor="image" className={'bg-accent-bis inline-block cursor-pointer rounded p-5 text-white shadow'}>
-                    <span>{fileName}</span>
+                <div className={"flex justify-between"}>
+                    <label htmlFor="title">Ajouter un titre</label>
                     <input
-                        type="file"
-                        name="image"
-                        id="image"
-                        accept={'image/*'}
-                        onChange={(e) => {
-                            const file = e.target.files?.[0];
-                            if (file) {
-                                setData('image', file);
-                                setPreview(URL.createObjectURL(file));
-                                setFileName(file.name);
-                            }
-                        }}
-                        className={'hidden'}
+                        type="text"
+                        name={'title'}
+                        id={'title'}
+                        placeholder={'Titre de l\'article'}
+                        className={'ml-2 border border-gray-300 focus:outline-none'}
+                        value={data.title}
+                        onChange={(e) => setData('title', e.target.value)}
+                        required
                     />
-                </label>
-                {preview && (
-                    <img src={preview} alt={"Preview"} className={"max-w-full lg:max-w-2xl mt-5 rounded"}/>
-                )}
-                {errors.image && (
-                    <p className={"text-red-600"}>{errors.image}</p>
-                )}
+                </div>
                 <br />
+
+                <div>
+                    <label htmlFor="image" className={'bg-accent-bis inline-block cursor-pointer rounded p-5 text-white shadow w-full text-center'}>
+                        <span>{fileName}</span>
+                        <input
+                            type="file"
+                            name="image"
+                            id="image"
+                            accept={'image/*'}
+                            onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) {
+                                    setData('image', file);
+                                    setPreview(URL.createObjectURL(file));
+                                    setFileName(file.name);
+                                }
+                            }}
+                            className={'hidden'}
+                        />
+                    </label>
+                    {preview && (
+                        <img src={preview} alt={"Preview"} className={"max-w-full lg:max-w-2xl mt-5 rounded"}/>
+                    )}
+                    {errors.image && (
+                        <p className={"text-red-600"}>{errors.image}</p>
+                    )}
+                </div>
                 <br />
-                <label htmlFor="price">Prix</label>
-                <input
-                    type="number"
-                    name="price"
-                    id="price"
-                    placeholder={"Prix de l'article"}
-                    className={'ml-2 border border-gray-300 focus:outline-none'}
-                    value={data.price}
-                    onChange={(e) => {
-                        setData('price', parseFloat(e.target.value));
-                    }}
-                    required
-                />
+
+                <div className={"flex justify-between"}>
+                    <label htmlFor="price">Prix</label>
+                    <input
+                        type="number"
+                        name="price"
+                        id="price"
+                        placeholder={'Prix de l\'article'}
+                        className={'ml-2 border border-gray-300 focus:outline-none'}
+                        value={data.price}
+                        onChange={(e) => {
+                            setData('price', parseFloat(e.target.value));
+                        }}
+                        required
+                    />
+                </div>
                 <br />
-                <br />
+
                 <select
                     name="age"
                     id="age"
-                    className={'border border-gray-300'}
+                    className={'w-full text-center'}
                     value={data.age}
                     onChange={(e) => setData('age', e.target.value)}
                     required
