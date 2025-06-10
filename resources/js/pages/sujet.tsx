@@ -35,19 +35,21 @@ const Sujet = () => {
     return (
         <div className={"grid lg:grid-cols-[25%_50%_25%]"}>
             <Head title={article.title} />
-            <div className={"hidden lg:flex flex-col items-center justify-center"}>
-                <h1>Mangalia</h1>
-                <nav className={"flex"}>
+            <div className={"hidden lg:flex h-screen sticky top-0 text-center flex-col items-center justify-center bg-white gap-5"}>
+                <h1 className={"pb-0"}>Mangalia</h1>
+                <Link href={route('home')} className={"hover:underline"}>Retour à l'accueil</Link>
+                <nav>
                     <ul>
-                        <Link href={route('home')} className={"hover:underline mt-5"}>Retour à l'accueil</Link>
                         {menu.map(({ id, title }) => (
-                            <li key={id}>
-                                <Link href={route('sujet', id)} className={`hover:underline ${id === article.id && "font-bold"}`}>{title}</Link>
-                            </li>
+                            <>
+                                <li key={id}>
+                                    <Link href={route('sujet', id)} className={`hover:underline ${id === article.id && "font-bold"}`}>{title}</Link>
+                                </li>
+                            </>
                         ))}
                     </ul>
                 </nav>
-                <div ref={menuRef} className={"absolute left-5 bottom-5"}>
+                <div ref={menuRef} className={"absolute left-5 bottom-5 flex flex-col items-start gap-2"}>
                     <nav className={`border rounded-lg bg-white shadow p-2 ${!showMenu && "hidden"}`}>
                         {auth.user ? (
                             <Link href={route("dashboard")}>Tableau de bord</Link>
@@ -73,15 +75,15 @@ const Sujet = () => {
                     {article.description}
                 </p>
             </div>
-            <div className={"hidden lg:flex flex-col items-center justify-center p-5 gap-10"}>
-                <h1>{article.title}</h1>
+            <div className={"hidden lg:flex h-screen top-0 sticky p-5 flex-col items-center justify-center gap-10 bg-white"}>
                 <img src={`/storage/${article.path.replace("public/", "")}`} alt="" className={"w-full"}/>
+                <h1>{article.title}</h1>
                 <p className={`font-bold ${article.age === "Tous publics" ? (
-                    "text-green-600"
+                    "text-green-700"
                 ) : (
-                    "text-red-600"
+                    "text-red-700"
                 )}`}>Restriction d'age : {article.age}</p>
-                <p className={"bg-orange-600 p-2 text-white rounded-xl"}>Prix : {article.price} €</p>
+                <Button className={"bg-orange-600 p-2 text-white"}>Prix : {article.price} €</Button>
             </div>
         </div>
     );

@@ -1,34 +1,89 @@
-import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import React from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Dashboard',
+        title: 'Tableau de bord',
         href: '/dashboard',
     },
 ];
 
+type ArticleProps = {
+    id: number;
+    path: string;
+    title: string;
+    price: number;
+}
+
+type FlashProps = {
+    success: string;
+}
+
 export default function Dashboard() {
+    const {articles, flash} = usePage<{articles: ArticleProps[], flash: FlashProps}>().props
+
+    const { delete: destroy } = useForm();
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
-            <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-                <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                    <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                    <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                    <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                </div>
-                <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min">
-                    <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                </div>
+            <div className={"p-5"}>
+                <h1>Page admin</h1>
+                {flash?.success && (
+                    <p>
+                        {flash.success}
+                    </p>
+                )}
+                <Link href={route('ajout')} className={"inline-block bg-accent-bis p-5 rounded-2xl mt-10 mb-20 text-white hover:bg-emerald-950 duration-300 w-42"}>
+                    Ajouter un article
+                </Link>
+                {articles.length > 0 ? (
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>id</TableHead>
+                                <TableHead>image</TableHead>
+                                <TableHead>Titre</TableHead>
+                                <TableHead>Prix (en €)</TableHead>
+                                <TableHead className={'text-center'}>Actions</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {articles.map((article) => (
+                                article.path && (
+                                    <TableRow key={article.id}>
+                                        <TableCell>{article.id}</TableCell>
+                                        <TableCell className={"w-30"}><img src={`/storage/${article.path.replace('public/', '')}`} alt={article.title} /></TableCell>
+                                        <TableCell>{article.title}</TableCell>
+                                        <TableCell>{article.price}</TableCell>
+                                        <TableCell>
+                                            <ul className={"flex justify-center gap-2"}>
+                                                <li><Link href={route("sujet", article.id)} className={"hover:underline"}>Voir</Link></li>
+                                                <li><Link href={route("update", article.id)} className={"hover:underline"}>Modifier</Link></li>
+                                                <li>
+                                                    <button
+                                                        onClick={() => {
+                                                            if (confirm(`Supprimer l'article "${article.title}" ?`)) {
+                                                                destroy(route('admin-delete', article.id));
+                                                            }
+                                                        }}
+                                                        className="text-red-600 hover:underline cursor-pointer"
+                                                    >
+                                                        Supprimer
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </TableCell>
+                                    </TableRow>
+                                )
+                            ))}
+                        </TableBody>
+                    </Table>
+                ) : (
+                    <p className={"text-red-600"}>Aucun articles actuellement</p>
+                )}
             </div>
         </AppLayout>
     );

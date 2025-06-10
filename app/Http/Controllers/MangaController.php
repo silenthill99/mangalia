@@ -38,13 +38,13 @@ class MangaController extends Controller
             'age' => $request->age,
             'description' => $request->description,
         ]);
-        return redirect()->route('admin')->with('success', 'Manga ajouté avec succès.');
+        return redirect()->route('dashboard')->with('success', 'Manga ajouté avec succès.');
 
     }
 
     function destroy ($id): RedirectResponse {
         Manga::destroy($id);
-        return redirect()->route('admin')->with('success', "Article supprimé");
+        return redirect()->back()->with('success', "Article supprimé");
     }
 
     function edit($id) {

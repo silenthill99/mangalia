@@ -1,4 +1,4 @@
-import { Head, usePage } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 type Articles = {
     id: number;
     title: string;
@@ -15,6 +15,7 @@ export default function Welcome() {
                 <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
             </Head>
             <h1>Page d'accueil</h1>
+            <Link href={route('dashboard')} className={"p-2 bg-gray-300 inline-block hover:bg-black hover:text-white duration-300 rounded shadow"}>Page admin</Link>
             <p>Bienvenue sur Mangalia, la plateforme de streaming n°1 au monde pour regarder des animés (Crunchyroll je t'ai à l'œil)</p>
             {/*<Form />*/}
             <div className={"grid lg:grid-cols-4 gap-10 pt-10"}>
