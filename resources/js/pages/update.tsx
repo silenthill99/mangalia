@@ -33,6 +33,8 @@ const Update = () => {
         })
     };
 
+    const { errors } = usePage<{errors: Record<string, string>}>().props;
+
     return (
         <div className="container mx-auto flex min-h-screen items-center justify-center">
             <Head title="Update" />
@@ -71,7 +73,10 @@ const Update = () => {
                     />
                 </label>
                 {preview && (
-                    <img src={preview} alt={"Preview"} className={"max-w-2xl mt-5 rounded"}/>
+                    <img src={preview} alt={"Preview"} className={"max-w-full lg:max-w-2xl mt-5 rounded"}/>
+                )}
+                {errors.image && (
+                    <p className={"text-red-600"}>{errors.image}</p>
                 )}
                 <br />
                 <br />

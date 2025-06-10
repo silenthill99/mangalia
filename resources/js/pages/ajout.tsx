@@ -67,6 +67,9 @@ const Ajout = () => {
                         className={'hidden'}
                     />
                 </label>
+                {preview && (
+                    <img src={preview} alt={"Preview"} className={"max-w-full lg:max-w-2xl mt-5 rounded"}/>
+                )}
                 {errors.image && (
                     <p className={"text-red-600"}>{errors.image}</p>
                 )}
