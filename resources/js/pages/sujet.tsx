@@ -5,6 +5,7 @@ type ArticleProps = {
     id: number;
     title: string;
     path: string;
+    price: string;
     description: string;
     age: string
 }
@@ -32,14 +33,15 @@ const Sujet = () => {
             <div className={"border-x border-gray-300 min-h-screen"}>
                 {article.description}
             </div>
-            <div className={"hidden lg:flex flex-col items-center justify-center p-5"}>
+            <div className={"hidden lg:flex flex-col items-center justify-center p-5 gap-10"}>
                 <h1>{article.title}</h1>
                 <img src={`/storage/${article.path.replace("public/", "")}`} alt="" className={"w-full"}/>
                 <p className={`font-bold ${article.age === "Tous publics" ? (
                     "text-green-600"
                 ) : (
                     "text-red-600"
-                )}`}>Restriction : {article.age}</p>
+                )}`}>Restriction d'age : {article.age}</p>
+                <p className={"bg-orange-600 p-2 text-white rounded-xl"}>Prix : {article.price} €</p>
             </div>
         </div>
     );

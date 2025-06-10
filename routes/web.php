@@ -23,7 +23,9 @@ Route::post('/', function (Request $request) {
         'image' => 'required|image|max:8000',
     ]);
 
-    $imagePath = $request->file('image')->store('public/mangas');
+    $image = $request->file('image');
+    $imageName = time().'.'.$image->getClientOriginalName();
+    $imagePath = $image->storeAs('public', $imageName);
 
     Manga::create([
         'title' => $request->title,
@@ -69,7 +71,7 @@ Route::get("/ajout", [MangaController::class, "ajout"])->name("ajout");
 Route::post("/ajout", [MangaController::class, "store"])->name("ajout");
 
 Route::get("/update/{id}", [MangaController::class, "edit"])->name("edit");
-Route::put("/update/{id}", [MangaController::class, "update"])->name("update");
+Route::post("/update/{id}", [MangaController::class, "update"])->name("update");
 
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';

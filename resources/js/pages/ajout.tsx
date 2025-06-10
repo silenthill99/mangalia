@@ -70,6 +70,9 @@ const Ajout = () => {
                 {errors.image && (
                     <p className={"text-red-600"}>{errors.image}</p>
                 )}
+                {preview && (
+                    <img src={preview} alt={"Preview"} className={"max-w-2xl mt-5 rounded"}/>
+                )}
                 <br />
                 <br />
                 <label htmlFor="price">Prix</label>
@@ -99,6 +102,7 @@ const Ajout = () => {
                         --Choisissez une valeur---
                     </option>
                     <option value={'Tous publics'}>Tous publics</option>
+                    <option value={'12 +'}>12 +</option>
                 </select>
                 <br />
                 <br />

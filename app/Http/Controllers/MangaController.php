@@ -55,23 +55,17 @@ class MangaController extends Controller
 
     function update($id, Request $request) {
 
-        // IMPORTANT : forcer Laravel à récupérer les bons champs pour une requête PUT + multipart
-        $data = $request->only(['title', 'price', 'age', 'description']);
+        $manga = Manga::findOrFail($id);
 
         // Validation
-        $validated = validator(
-            array_merge($data, ['image' => $request->file('image')]),
-            [
-                'title' => 'required|string|max:255',
-                'price' => 'required|numeric|min:0',
-                'age' => 'required|string|max:255',
-                'description' => 'required|string',
-                'image' => 'nullable|image|max:8000',
-            ]
-        )->validate();
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'price' => 'required|numeric|min:0',
+            'age' => 'required|string|max:255',
+            'description' => 'required|string',
+            'image' => 'nullable|image|max:8000',
+        ]);
 
-        // Récupération de l'article
-        $manga = Manga::findOrFail($id);
 
         // Mise à jour de l'image si elle a été changée
         if ($request->hasFile('image')) {
@@ -80,13 +74,7 @@ class MangaController extends Controller
             $validated['path'] = $image->storeAs('images', $imageName, 'public');
         }
 
-        $manga->update([
-            'title' => $validated['title'],
-            'price' => $validated['price'],
-            'age' => $validated['age'],
-            'description' => $validated['description'],
-            'path' => $validated['path'] ?? $manga->path, // garde l'ancienne si aucune nouvelle
-        ]);
+        $manga->update($validated);
 
         return redirect()->route('admin')->with('success', 'Manga mis à jour.');
     }

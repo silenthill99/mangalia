@@ -16,7 +16,7 @@ const Update = () => {
     const [fileName, setFileName] = useState("Choisir une image");
     const [preview, setPreview] = useState<string | null>(null);
 
-    const { data, setData, put, reset } = useForm({
+    const { data, setData , post, reset} = useForm({
         title: article.title,
         price: article.price,
         age: article.age,
@@ -26,78 +26,99 @@ const Update = () => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        const formData: any = { ...data };
-
-        // ⚠️ si aucune nouvelle image, on ne l'envoie pas
-        if (!formData.image) {
-            delete formData.image;
-        }
-
-        put(`/update/${article.id}`, formData, {
+        post(route('update', article.id), {
             forceFormData: true,
-            onSuccess: () => reset(),
-            onError: (errors) => console.error("❌ Erreurs", errors),
-            onFinish: () => console.log("✅ Terminé"),
-        });
+            preserveScroll: true,
+            onFinish: () => reset()
+        })
     };
 
     return (
         <div className="container mx-auto flex min-h-screen items-center justify-center">
             <Head title="Update" />
-            <form onSubmit={handleSubmit} encType="multipart/form-data" className="w-full max-w-lg border p-5 rounded shadow">
-                <label htmlFor="title">Titre</label>
+            <form onSubmit={handleSubmit} action="" method="post"
+                  className={'my-5 w-9/10 rounded border border-gray-300 p-5 md:w-auto'}>
+                <label htmlFor="title">Ajouter un titre</label>
                 <input
                     type="text"
-                    id="title"
+                    name={'title'}
+                    id={'title'}
+                    placeholder={"Titre de l'article"}
+                    className={'ml-2 border border-gray-300 focus:outline-none'}
                     value={data.title}
-                    onChange={e => setData("title", e.target.value)}
-                    className="w-full border mb-4"
+                    onChange={(e) => setData('title', e.target.value)}
+                    required
                 />
-
-                <label htmlFor="image" className="bg-blue-500 text-white p-3 rounded cursor-pointer inline-block">
-                    {fileName}
+                <br />
+                <br />
+                <label htmlFor="image"
+                       className={'bg-accent-bis inline-block cursor-pointer rounded p-5 text-white shadow'}>
+                    <span>{fileName}</span>
                     <input
                         type="file"
+                        name="image"
                         id="image"
-                        accept="image/*"
-                        className="hidden"
-                        onChange={e => {
+                        accept={'image/*'}
+                        onChange={(e) => {
                             const file = e.target.files?.[0];
                             if (file) {
-                                setData("image", file);
-                                setFileName(file.name);
+                                setData('image', file);
                                 setPreview(URL.createObjectURL(file));
+                                setFileName(file.name);
                             }
                         }}
+                        className={'hidden'}
                     />
                 </label>
-
+                {preview && (
+                    <img src={preview} alt={"Preview"} className={"max-w-2xl mt-5 rounded"}/>
+                )}
+                <br />
+                <br />
                 <label htmlFor="price">Prix</label>
                 <input
                     type="number"
+                    name="price"
                     id="price"
+                    placeholder={"Prix de l'article"}
+                    className={'ml-2 border border-gray-300 focus:outline-none'}
                     value={data.price}
-                    onChange={e => setData("price", parseFloat(e.target.value))}
-                    className="w-full border mb-4"
+                    onChange={(e) => {
+                        setData('price', parseFloat(e.target.value));
+                    }}
+                    required
                 />
-
-                <label htmlFor="age">Âge</label>
+                <br />
+                <br />
                 <select
+                    name="age"
                     id="age"
+                    className={'border border-gray-300'}
                     value={data.age}
-                    onChange={e => setData("age", e.target.value)}
-                    className="w-full border mb-4"
+                    onChange={(e) => setData('age', e.target.value)}
+                    required
                 >
-                    <option value="" disabled>-- Choisissez une restriction --</option>
-                    <option value="Tous publics">Tous publics</option>
-                    <option value="12+">12+</option>
-                    <option value="16+">16+</option>
-                    <option value="18+">18+</option>
+                    <option value="" disabled>
+                        --Choisissez une valeur---
+                    </option>
+                    <option value={'Tous publics'}>Tous publics</option>
+                    <option value={'12 +'}>12 +</option>
                 </select>
-
-                <label htmlFor="description">Résumé</label>
+                <br />
+                <br />
+                <label htmlFor="description">Résumé</label><br />
                 <textarea
+                    name="description"
                     id="description"
+                    className={"border border-gray-300 focus:outline-none resize-none w-full lg:w-100 h-100"}
                     value={data.description}
-                    onChange={e => setData("description", e.target.value)}
+                    onChange={(e) => setData("description", e.target.value)}
+                    required
+                ></textarea><br />
+                <input type="submit" value="Valider" />
+            </form>
+        </div>
+    )
+}
+
+export default Update
