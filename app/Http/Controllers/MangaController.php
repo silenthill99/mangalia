@@ -76,6 +76,6 @@ class MangaController extends Controller
 
         $manga->update($validated);
 
-        return redirect()->route('admin')->with('success', 'Manga mis à jour.');
+        return redirect()->route('dashboard')->with('success', 'Manga mis à jour.');
     }
 }
