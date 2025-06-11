@@ -14,7 +14,7 @@ const Update = () => {
     const { article } = usePage<{ article: ArticleProps }>().props;
 
     const [fileName, setFileName] = useState("Choisir une image");
-    const [preview, setPreview] = useState<string | null>(null);
+    const [preview, setPreview] = useState<string | null>(article.path);
 
     const { data, setData , post, reset} = useForm({
         title: article.title,
@@ -40,21 +40,22 @@ const Update = () => {
             <Head title="Update" />
             <form onSubmit={handleSubmit} action="" method="post"
                   className={'my-5 w-9/10 rounded border border-gray-300 p-5 md:w-auto'}>
-                <label htmlFor="title">Ajouter un titre</label>
-                <input
-                    type="text"
-                    name={'title'}
-                    id={'title'}
-                    placeholder={"Titre de l'article"}
-                    className={'ml-2 border border-gray-300 focus:outline-none'}
-                    value={data.title}
-                    onChange={(e) => setData('title', e.target.value)}
-                    required
-                />
-                <br />
+                <div className={'flex justify-between'}>
+                    <label htmlFor="title">Ajouter un titre</label>
+                    <input
+                        type="text"
+                        name={'title'}
+                        id={'title'}
+                        placeholder={"Titre de l'article"}
+                        className={'ml-2 border border-gray-300 focus:outline-none'}
+                        value={data.title}
+                        onChange={(e) => setData('title', e.target.value)}
+                        required
+                    />
+                </div>
                 <br />
                 <label htmlFor="image"
-                       className={'bg-accent-bis inline-block cursor-pointer rounded p-5 text-white shadow'}>
+                       className={'bg-accent-bis inline-block cursor-pointer rounded p-5 text-white shadow w-full text-center'}>
                     <span>{fileName}</span>
                     <input
                         type="file"
@@ -73,32 +74,32 @@ const Update = () => {
                     />
                 </label>
                 {preview && (
-                    <img src={preview} alt={"Preview"} className={"max-w-full lg:max-w-2xl mt-5 rounded"}/>
+                    <img src={"/storage/" + preview} alt={"Preview"} className={"max-w-full lg:max-w-2xl mt-5 rounded"}/>
                 )}
                 {errors.image && (
                     <p className={"text-red-600"}>{errors.image}</p>
                 )}
                 <br />
-                <br />
-                <label htmlFor="price">Prix</label>
-                <input
-                    type="number"
-                    name="price"
-                    id="price"
-                    placeholder={"Prix de l'article"}
-                    className={'ml-2 border border-gray-300 focus:outline-none'}
-                    value={data.price}
-                    onChange={(e) => {
-                        setData('price', parseFloat(e.target.value));
-                    }}
-                    required
-                />
-                <br />
+                <div className={"flex justify-between"}>
+                    <label htmlFor="price">Prix</label>
+                    <input
+                        type="number"
+                        name="price"
+                        id="price"
+                        placeholder={"Prix de l'article"}
+                        className={'ml-2 border border-gray-300 focus:outline-none'}
+                        value={data.price}
+                        onChange={(e) => {
+                            setData('price', parseFloat(e.target.value));
+                        }}
+                        required
+                    />
+                </div>
                 <br />
                 <select
                     name="age"
                     id="age"
-                    className={'border border-gray-300'}
+                    className={'border border-gray-300 w-full text-center'}
                     value={data.age}
                     onChange={(e) => setData('age', e.target.value)}
                     required
@@ -115,7 +116,7 @@ const Update = () => {
                 <textarea
                     name="description"
                     id="description"
-                    className={"border border-gray-300 focus:outline-none resize-none w-full lg:w-100 h-100"}
+                    className={"border border-gray-300 focus:outline-none resize-none w-full lg:w-2xl h-100"}
                     value={data.description}
                     onChange={(e) => setData("description", e.target.value)}
                     required

@@ -41,11 +41,9 @@ const Sujet = () => {
                 <nav>
                     <ul>
                         {menu.map(({ id, title }) => (
-                            <>
-                                <li key={id}>
-                                    <Link href={route('sujet', id)} className={`hover:underline ${id === article.id && "font-bold"}`}>{title}</Link>
-                                </li>
-                            </>
+                            <li key={id}>
+                                <Link href={route('sujet', id)} className={`hover:underline ${id === article.id && "font-bold"}`}>{title}</Link>
+                            </li>
                         ))}
                     </ul>
                 </nav>
@@ -76,7 +74,7 @@ const Sujet = () => {
                 </p>
             </div>
             <div className={"hidden lg:flex h-screen top-0 sticky p-5 flex-col items-center justify-center gap-10 bg-white"}>
-                <img src={`/storage/${article.path.replace("public/", "")}`} alt="" className={"w-full"}/>
+                <img src={`/storage/${article.path}`} alt="" className={"w-full"}/>
                 <h1>{article.title}</h1>
                 <p className={`font-bold ${article.age === "Tous publics" ? (
                     "text-green-700"
