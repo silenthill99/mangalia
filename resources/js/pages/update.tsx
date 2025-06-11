@@ -104,11 +104,11 @@ const Update = () => {
                     onChange={(e) => setData('age', e.target.value)}
                     required
                 >
-                    <option value="" disabled>
-                        --Choisissez une valeur---
-                    </option>
+                    <option value="" disabled>--Choisissez une valeur---</option>
                     <option value={'Tous publics'}>Tous publics</option>
                     <option value={'12 +'}>12 +</option>
+                    <option value={'16 +'}>16 +</option>
+                    <option value={'18 +'}>18 +</option>
                 </select>
                 <br />
                 <br />
