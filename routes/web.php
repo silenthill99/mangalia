@@ -42,13 +42,17 @@ Route::post('/', function (Request $request) {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         $manga = Manga::all();
-        return Inertia::render('dashboard', ['articles' => $manga]);
+        $count = Manga::count();
+        return Inertia::render('dashboard', [
+            'articles' => $manga,
+            'nombre' => $count
+        ]);
     })->name('dashboard');
 });
 
 Route::get('sujet/{id}', function ($id) {
 
-    $art = Manga::find($id);
+    $art = Manga::findOrFail($id);
     $menu = Manga::all();
 
     return Inertia::render('sujet', [

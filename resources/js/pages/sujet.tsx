@@ -7,9 +7,11 @@ type ArticleProps = {
     id: number;
     title: string;
     path: string;
-    price: string;
+    price: number;
     description: string;
     age: string
+    created_at: string;
+    updated_at: string;
 }
 
 const Sujet = () => {
@@ -35,6 +37,7 @@ const Sujet = () => {
     return (
         <div className={"grid lg:grid-cols-[25%_50%_25%]"}>
             <Head title={article.title} />
+            {/*Panneau de gauche*/}
             <div className={"hidden lg:flex h-screen sticky top-0 text-center flex-col items-center justify-center bg-white gap-5"}>
                 <h1 className={"pb-0"}>Mangalia</h1>
                 <Link href={route('home')} className={"hover:underline"}>Retour à l'accueil</Link>
@@ -67,12 +70,47 @@ const Sujet = () => {
                     }}>Profil</Button>
                 </div>
             </div>
-            <div className={"md:border-x border-gray-300 min-h-screen px-5 lg:px-20 pb-20"}>
-                <h1>Résumé</h1>
-                <p className={"whitespace-pre-line"}>
-                    {article.description}
-                </p>
-            </div>
+
+            {/*Panneau central*/}
+
+            <section className={"md:border-x border-gray-300 min-h-screen px-5 lg:px-20 py-20 relative flex flex-col justify-between"}>
+                <div>
+                    <div className={'lg:hidden flex flex-col gap-5'}>
+                        <h1 className={'py-0'}>{article.title}</h1>
+                        <img className={'w-full rounded'} src={`/storage/${article.path}`} alt="" />
+                        <p className={`font-bold ${article.age === "Tous publics" ? (
+                            "text-green-700"
+                        ) : (
+                            "text-red-700"
+                        )}`}>Restriction d'age : {article.age}</p>
+                    </div>
+                    <h1 className={"lg:pt-0"}>Résumé</h1>
+                    <p className={"whitespace-pre-line text-justify"}>
+                        {article.description}
+                    </p>
+                </div>
+                <div className={"text-gray-300 flex flex-wrap justify-between gap-5 w-auto"}>
+                    <p>Article ajouté le {new Date(article.created_at).toLocaleDateString('fr-FR', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                    })}</p>
+                    {article.created_at !== article.updated_at && (
+                        <p>Dernière modification le {new Date(article.updated_at).toLocaleDateString('fr-FR', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                        })}</p>
+                    )}
+                </div>
+            </section>
+
+            {/*Panneau de droite*/}
+
             <div className={"hidden lg:flex h-screen top-0 sticky p-5 flex-col items-center justify-center gap-10 bg-white"}>
                 <img src={`/storage/${article.path}`} alt="" className={"w-full"}/>
                 <h1>{article.title}</h1>
@@ -81,7 +119,7 @@ const Sujet = () => {
                 ) : (
                     "text-red-700"
                 )}`}>Restriction d'age : {article.age}</p>
-                <Button className={"bg-orange-600 p-2 text-white"}>Prix : {article.price} €</Button>
+                <Button className={"bg-orange-600 p-2 text-white"}>Prix : {article.price} € {article.price > 40 && "(J'aime l'argent)"}</Button>
             </div>
         </div>
     );

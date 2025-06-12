@@ -14,7 +14,7 @@ const Update = () => {
     const { article } = usePage<{ article: ArticleProps }>().props;
 
     const [fileName, setFileName] = useState("Choisir une image");
-    const [preview, setPreview] = useState<string | null>(article.path);
+    const [preview, setPreview] = useState<string | null>("/storage/" + article.path);
 
     const { data, setData , post, reset} = useForm({
         title: article.title,
@@ -74,7 +74,7 @@ const Update = () => {
                     />
                 </label>
                 {preview && (
-                    <img src={"/storage/" + preview} alt={"Preview"} className={"max-w-full lg:max-w-2xl mt-5 rounded"}/>
+                    <img src={preview} alt={"Preview"} className={"max-w-full lg:max-w-2xl mt-5 rounded"}/>
                 )}
                 {errors.image && (
                     <p className={"text-red-600"}>{errors.image}</p>
