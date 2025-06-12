@@ -1,5 +1,5 @@
 import React, { FormEvent, useState } from 'react';
-import { Head, useForm, usePage } from '@inertiajs/react';
+import { Head, router, useForm, usePage } from '@inertiajs/react';
 
 type ArticleProps = {
     id: number;
@@ -39,7 +39,7 @@ const Update = () => {
         <div className="container mx-auto flex min-h-screen items-center justify-center">
             <Head title="Update" />
             <form onSubmit={handleSubmit} action="" method="post"
-                  className={'my-5 w-9/10 rounded border border-gray-300 p-5 md:w-auto'}>
+                  className={'my-5 w-9/10 rounded border p-5 md:w-auto'}>
                 <div className={'flex justify-between'}>
                     <label htmlFor="title">Ajouter un titre</label>
                     <input
@@ -47,7 +47,7 @@ const Update = () => {
                         name={'title'}
                         id={'title'}
                         placeholder={"Titre de l'article"}
-                        className={'ml-2 border border-gray-300 focus:outline-none'}
+                        className={'ml-2 border focus:outline-none text-right pr-2'}
                         value={data.title}
                         onChange={(e) => setData('title', e.target.value)}
                         required
@@ -87,7 +87,7 @@ const Update = () => {
                         name="price"
                         id="price"
                         placeholder={"Prix de l'article"}
-                        className={'ml-2 border border-gray-300 focus:outline-none'}
+                        className={'ml-2 border focus:outline-none text-right'}
                         value={data.price}
                         onChange={(e) => {
                             setData('price', parseFloat(e.target.value));
@@ -99,7 +99,7 @@ const Update = () => {
                 <select
                     name="age"
                     id="age"
-                    className={'border border-gray-300 w-full text-center'}
+                    className={'border w-full text-center'}
                     value={data.age}
                     onChange={(e) => setData('age', e.target.value)}
                     required
@@ -116,12 +116,19 @@ const Update = () => {
                 <textarea
                     name="description"
                     id="description"
-                    className={"border border-gray-300 focus:outline-none resize-none w-full lg:w-2xl h-100"}
+                    className={"border focus:outline-none resize-none w-full lg:w-2xl h-100 text-justify p-2"}
                     value={data.description}
                     onChange={(e) => setData("description", e.target.value)}
                     required
                 ></textarea><br />
-                <input type="submit" value="Valider" />
+                <div className={'flex justify-between'}>
+                    <input type="submit" value="Valider" className={'bg-black text-white p-2 rounded hover:bg-gray-600 active:bg-gray-800 cursor-pointer duration-300'} />
+                    <button type={"button"} onClick={() => {
+                        if (confirm("Voulez-vous continuer ? Toutes les modifications apportées seront perdues")) {
+                            router.visit(route("dashboard"));
+                        }
+                    }}>Annuler</button>
+                </div>
             </form>
         </div>
     )
