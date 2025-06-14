@@ -35,7 +35,7 @@ const Ajout = () => {
     return (
         <div className={'container mx-auto flex min-h-screen items-center justify-center'}>
             <Head title={'Ajouter un article'} />
-            <form onSubmit={handleSubmit} action="" method="post" className={'my-5 w-9/10 rounded border p-5 md:w-auto'}>
+            <form onSubmit={handleSubmit} action="" method="post" className={'my-5 w-9/10 rounded border border-gray-300 p-5 md:w-auto'}>
                 <div className={"flex justify-between"}>
                     <label htmlFor="title">Ajouter un titre</label>
                     <input
@@ -123,7 +123,7 @@ const Ajout = () => {
                 ></textarea><br/>
                 <div className={"flex justify-between"}>
                     <input type="submit" value="Valider"
-                            className={'bg-black text-white p-2 rounded hover:bg-gray-600 active:bg-gray-800 cursor-pointer duration-300'} />
+                           className={'bg-black text-white p-2 rounded hover:bg-gray-600 active:bg-gray-800 cursor-pointer duration-300'} />
                     <button type={"button"} onClick={() => {
                         if (confirm("Voulez-vous continuer ? Toutes les modifications apportées seront perdues")) {
                             router.visit(route("dashboard"));

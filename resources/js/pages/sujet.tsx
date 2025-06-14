@@ -34,11 +34,14 @@ const Sujet = () => {
         }
     }, []);
 
+    const [dark, setDark] = useState(false)
+
     return (
-        <div className={"grid lg:grid-cols-[25%_50%_25%]"}>
+        <div className={`grid lg:grid-cols-[25%_50%_25%] ${dark && "dark"} dark:bg-black dark:text-white`}>
             <Head title={article.title} />
             {/*Panneau de gauche*/}
-            <div className={"hidden lg:flex h-screen sticky top-0 text-center flex-col items-center justify-center bg-white gap-5"}>
+            <div className={"hidden lg:flex h-screen sticky top-0 text-center flex-col items-center justify-center bg-white dark:bg-black gap-5"}>
+                <Button variant={dark ? "secondary" : "default"} onClick={()=>setDark(!dark)}>Dark mode</Button>
                 <h1 className={"pb-0"}>Mangalia</h1>
                 <Link href={route('home')} className={"hover:underline"}>Retour à l'accueil</Link>
                 <nav>
@@ -73,7 +76,7 @@ const Sujet = () => {
 
             {/*Panneau central*/}
 
-            <section className={"md:border-x border-gray-300 min-h-screen px-5 lg:px-20 py-20 relative flex flex-col justify-between"}>
+            <section className={"lg:border-x min-h-screen px-5 lg:px-20 py-20 relative flex flex-col justify-between"}>
                 <div>
                     <div className={'lg:hidden flex flex-col gap-5'}>
                         <h1 className={'py-0'}>{article.title}</h1>
@@ -89,7 +92,7 @@ const Sujet = () => {
                         {article.description}
                     </p>
                 </div>
-                <div className={"text-gray-300 flex flex-wrap justify-between gap-5 w-auto"}>
+                <div className={"text-gray-500 flex flex-wrap justify-between gap-5 w-auto"}>
                     <p>Article ajouté le {new Date(article.created_at).toLocaleDateString('fr-FR', {
                         year: 'numeric',
                         month: 'long',
@@ -111,7 +114,7 @@ const Sujet = () => {
 
             {/*Panneau de droite*/}
 
-            <div className={"hidden lg:flex h-screen top-0 sticky p-5 flex-col items-center justify-center gap-10 bg-white"}>
+            <div className={"hidden lg:flex h-screen top-0 sticky p-5 flex-col items-center justify-center gap-10 bg-white dark:bg-black"}>
                 <img src={`/storage/${article.path}`} alt="" className={"w-full"}/>
                 <h1>{article.title}</h1>
                 <p className={`font-bold ${article.age === "Tous publics" ? (
