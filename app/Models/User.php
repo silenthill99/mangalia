@@ -45,4 +45,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function mangas()
+    {
+        return $this->hasMany(Manga::class);
+    }
 }

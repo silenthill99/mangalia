@@ -31,7 +31,7 @@ class MangaController extends Controller
         $imageName =  time() . '_' . $image->getClientOriginalName(); // ex: 1717861245_cover.jpg
         $path = $image->storeAs('images', $imageName, 'public');
 
-        $article = Manga::create([
+        $article = auth()->user()->mangas()->create([
             'title' => $request->title,
             'path' => $path,
             'price' => $request->price,
@@ -75,6 +75,8 @@ class MangaController extends Controller
         }
 
         $manga->update($validated);
+
+
 
         return redirect()->route('dashboard')->with('success', 'Manga mis à jour.');
     }

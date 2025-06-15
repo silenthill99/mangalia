@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    $articles = Manga::all();
+    $articles = Manga::with("user");
     return Inertia::render('welcome', [
         'articles' => $articles
     ]);
@@ -41,7 +41,7 @@ Route::post('/', function (Request $request) {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
-        $manga = Manga::all();
+        $manga = Manga::with("user");
         $count = Manga::count();
         return Inertia::render('dashboard', [
             'articles' => $manga,
@@ -53,7 +53,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::get('sujet/{id}', function ($id) {
 
     $art = Manga::findOrFail($id);
-    $menu = Manga::all();
+    $menu = Manga::with("user")->findOrFail($id);
 
     return Inertia::render('sujet', [
         'article' => $art,
