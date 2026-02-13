@@ -1,5 +1,6 @@
 import React, { FormEvent, useState } from 'react';
 import { useForm } from '@inertiajs/react';
+import { home } from '@/routes';
 
 type FormProps = {
     title: string;
@@ -24,7 +25,7 @@ const Form = () => {
 
     function submitForm(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        post(route('home'), {
+        post(home().url, {
             forceFormData: true,
             onFinish: () => reset()
         })
@@ -43,6 +44,9 @@ const Form = () => {
                     }
                 }}
             /><br/>
+            {preview && (
+                <img src={preview} alt={"preview"}/>
+            )}<br/>
             <input
                 type="text"
                 name={"title"}

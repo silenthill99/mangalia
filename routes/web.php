@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    $articles = Manga::with("user");
+    $articles = Manga::with("user")->get();
     return Inertia::render('welcome', [
         'articles' => $articles
     ]);
@@ -50,10 +50,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 });
 
-Route::get('sujet/{id}', function ($id) {
+Route::get('sujet/{art}', function (Manga $art) {
 
-    $art = Manga::findOrFail($id);
-    $menu = Manga::with("user")->findOrFail($id);
+    $menu = Manga::all();
 
     return Inertia::render('sujet', [
         'article' => $art,
@@ -66,7 +65,7 @@ Route::delete('/admin-delete/{id}', [MangaController::class, "destroy"])->name('
 
 Route::get("/ajout", [MangaController::class, "ajout"])->name("ajout");
 
-Route::post("/ajout", [MangaController::class, "store"])->name("ajout");
+Route::post("/ajout", [MangaController::class, "store"])->name("ajout.store");
 
 Route::get("/update/{id}", [MangaController::class, "edit"])->name("edit");
 Route::post("/update/{id}", [MangaController::class, "update"])->name("update");

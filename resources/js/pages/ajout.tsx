@@ -1,5 +1,6 @@
 import React, { FormEvent, useState } from 'react';
 import { Head, router, useForm, usePage } from '@inertiajs/react';
+import { ajout, dashboard } from '@/routes';
 
 type FormProps = {
     title: string;
@@ -24,7 +25,7 @@ const Ajout = () => {
     const [preview, setPreview] = useState<string | null>(null);
     function handleSubmit(e : FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        post(route('ajout'), {
+        post(ajout().url, {
             forceFormData: true,
             onFinish: () => reset()
         })
@@ -126,7 +127,7 @@ const Ajout = () => {
                            className={'bg-black text-white p-2 rounded hover:bg-gray-600 active:bg-gray-800 cursor-pointer duration-300'} />
                     <button type={"button"} onClick={() => {
                         if (confirm("Voulez-vous continuer ? Toutes les modifications apportées seront perdues")) {
-                            router.visit(route("dashboard"));
+                            router.visit(dashboard());
                         }
                     }}>Annuler</button>
                 </div>

@@ -1,5 +1,6 @@
 import React, { FormEvent, useState } from 'react';
 import { Head, router, useForm, usePage } from '@inertiajs/react';
+import { dashboard, update } from '@/routes';
 
 type ArticleProps = {
     id: number;
@@ -26,7 +27,7 @@ const Update = () => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        post(route('update', article.id), {
+        post(update({id: article.id}).url, {
             forceFormData: true,
             preserveScroll: true,
             onFinish: () => reset()
@@ -125,7 +126,7 @@ const Update = () => {
                     <input type="submit" value="Valider" className={'bg-black text-white p-2 rounded hover:bg-gray-600 active:bg-gray-800 cursor-pointer duration-300'} />
                     <button type={"button"} onClick={() => {
                         if (confirm("Voulez-vous continuer ? Toutes les modifications apportées seront perdues")) {
-                            router.visit(route("dashboard"));
+                            router.visit(dashboard());
                         }
                     }}>Annuler</button>
                 </div>

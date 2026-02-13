@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Head, Link, usePage } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { SharedData } from '@/types';
+import { dashboard, home, login, register, sujet } from '@/routes';
 
 type ArticleProps = {
     id: number;
@@ -43,12 +44,12 @@ const Sujet = () => {
             <div className={"hidden lg:flex h-screen sticky top-0 text-center flex-col items-center justify-center bg-white dark:bg-black gap-5"}>
                 <Button variant={dark ? "secondary" : "default"} onClick={()=>setDark(!dark)}>Dark mode</Button>
                 <h1 className={"pb-0"}>Mangalia</h1>
-                <Link href={route('home')} className={"hover:underline"}>Retour à l'accueil</Link>
+                <Link href={home()} className={"hover:underline"}>Retour à l'accueil</Link>
                 <nav>
                     <ul>
                         {menu.map(({ id, title }) => (
                             <li key={id}>
-                                <Link href={route('sujet', id)} className={`hover:underline ${id === article.id && "font-bold"}`}>{title}</Link>
+                                <Link href={sujet({ id: id })} className={`hover:underline ${id === article.id && "font-bold"}`}>{title}</Link>
                             </li>
                         ))}
                     </ul>
@@ -56,14 +57,14 @@ const Sujet = () => {
                 <div ref={menuRef} className={"absolute left-5 bottom-5 flex flex-col items-start gap-2"}>
                     <nav className={`border rounded-lg bg-white shadow p-2 ${!showMenu && "hidden"}`}>
                         {auth.user ? (
-                            <Link href={route("dashboard")}>Tableau de bord</Link>
+                            <Link href={dashboard()}>Tableau de bord</Link>
                         ) : (
                             <ul>
                                 <li>
-                                    <Link href={route('login')}>Se connecter</Link>
+                                    <Link href={login()}>Se connecter</Link>
                                 </li>
                                 <li>
-                                    <Link href={route('register')}>Créer un compte</Link>
+                                    <Link href={register()}>Créer un compte</Link>
                                 </li>
                             </ul>
                         )}

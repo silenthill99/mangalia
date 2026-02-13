@@ -3,6 +3,7 @@ import { type BreadcrumbItem } from '@/types';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import React from 'react';
+import { adminDelete, ajout, sujet, update } from '@/routes';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -36,7 +37,7 @@ export default function Dashboard() {
                         {flash.success}
                     </p>
                 )}
-                <Link href={route('ajout')} className={"inline-block bg-accent-bis p-5 rounded-2xl mt-10 mb-20 text-white hover:bg-emerald-950 duration-300 w-42"}>
+                <Link href={ajout()} className={"inline-block bg-accent-bis p-5 rounded-2xl mt-10 mb-20 text-white hover:bg-emerald-950 duration-300 w-42"}>
                     Ajouter un article
                 </Link>
                 {articles.length > 0 ? (
@@ -60,13 +61,13 @@ export default function Dashboard() {
                                         <TableCell>{article.price}</TableCell>
                                         <TableCell>
                                             <ul className={"flex justify-center gap-2"}>
-                                                <li><Link href={route("sujet", article.id)} className={"hover:underline"}>Voir</Link></li>
-                                                <li><Link href={route("update", article.id)} className={"hover:underline"}>Modifier</Link></li>
+                                                <li><Link href={sujet({ id: article.id })} className={"hover:underline"}>Voir</Link></li>
+                                                <li><Link href={update({id: article.id})} className={"hover:underline"}>Modifier</Link></li>
                                                 <li>
                                                     <button
                                                         onClick={() => {
                                                             if (confirm(`Supprimer l'article "${article.title}" ?`)) {
-                                                                destroy(route('admin-delete', article.id));
+                                                                destroy(adminDelete({ id: article.id }).url);
                                                             }
                                                         }}
                                                         className="text-red-600 hover:underline cursor-pointer"

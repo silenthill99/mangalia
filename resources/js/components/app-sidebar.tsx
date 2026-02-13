@@ -6,6 +6,7 @@ import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
 import { BookOpen, Folder, LayoutGrid } from 'lucide-react';
 import AppLogo from './app-logo';
+import { home } from '@/routes';
 
 const mainNavItems: NavItem[] = [
     {
@@ -15,7 +16,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: "Retour à l'accueil",
-        href: route("home")
+        href: home().url
     }
 ];
 
