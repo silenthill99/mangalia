@@ -17,7 +17,7 @@ const Update = () => {
     const [fileName, setFileName] = useState("Choisir une image");
     const [preview, setPreview] = useState<string | null>("/storage/" + article.path);
 
-    const { data, setData , post, reset} = useForm({
+    const { data, setData , put, reset} = useForm({
         title: article.title,
         price: article.price,
         age: article.age,
@@ -27,7 +27,7 @@ const Update = () => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        post(update({id: article.id}).url, {
+        put(update({id: article.id}).url, {
             forceFormData: true,
             preserveScroll: true,
             onFinish: () => reset()
@@ -39,7 +39,7 @@ const Update = () => {
     return (
         <div className="container mx-auto flex min-h-screen items-center justify-center">
             <Head title="Update" />
-            <form onSubmit={handleSubmit} action="" method="post"
+            <form onSubmit={handleSubmit} action="" method="put"
                   className={'my-5 w-9/10 rounded border p-5 md:w-auto'}>
                 <div className={'flex justify-between'}>
                     <label htmlFor="title">Ajouter un titre</label>

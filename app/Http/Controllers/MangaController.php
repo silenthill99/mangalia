@@ -67,6 +67,8 @@ class MangaController extends Controller
             'image' => 'nullable|image|max:8000',
         ]);
 
+//        $oldImagePath = null;
+
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time().'_'.$image->getClientOriginalName();
@@ -75,6 +77,10 @@ class MangaController extends Controller
         }
 
         $manga->update($validated);
+
+//        if ($oldImagePath) {
+//            $this->deleteImage($oldImagePath);
+//        }
 
         return redirect()->route('dashboard')->with('success', 'Manga mis à jour.');
     }
