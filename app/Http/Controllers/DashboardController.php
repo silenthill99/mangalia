@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\MangaResource;
 use App\Models\Manga;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +19,7 @@ class DashboardController extends Controller
         $count = Manga::count();
 
         return Inertia::render('dashboard', [
-            'articles' => $manga,
+            'articles' => MangaResource::collection($manga),
             'nombre' => $count,
         ]);
     }

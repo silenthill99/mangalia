@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MangaController;
-use App\Models\Manga;
+    use App\Http\Resources\MangaResource;
+    use App\Models\Manga;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -10,7 +11,7 @@ Route::get('/', function () {
     $articles = Manga::with('user')->get();
 
     return Inertia::render('welcome', [
-        'articles' => $articles,
+        'articles' => MangaResource::collection($articles),
     ]);
 })->name('home');
 

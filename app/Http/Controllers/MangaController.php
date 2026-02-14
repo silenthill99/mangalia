@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMangaRequest;
 use App\Http\Requests\UpdateMangaRequest;
+use App\Http\Resources\MangaResource;
 use App\Models\Manga;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
@@ -43,7 +44,7 @@ class MangaController extends Controller
     public function edit(Manga $manga): Response
     {
         Gate::authorize('update', $manga);
-        return Inertia::render('mangas/edit', ['article' => $manga]);
+        return Inertia::render('mangas/edit', ['article' => new MangaResource($manga)]);
     }
 
     public function update(Manga $manga, UpdateMangaRequest $request): RedirectResponse
@@ -67,8 +68,8 @@ class MangaController extends Controller
         $menu = Manga::all();
 
         return Inertia::render('mangas/show', [
-            'article' => $manga,
-            'menu' => $menu,
+            'article' => new MangaResource($manga),
+            'menu' => MangaResource::collection($menu),
         ]);
     }
 
