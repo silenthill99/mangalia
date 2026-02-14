@@ -40,4 +40,17 @@ export interface User {
     created_at: string;
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
+    articles: Article[];
+}
+
+export interface Article {
+    id: number;
+    title: string;
+    path: string;
+    price: number;
+    age: string;
+    description: string;
+    created_at: string;
+    updated_at: string;
+    user: User;
 }

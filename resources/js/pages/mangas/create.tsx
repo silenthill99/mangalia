@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Form, Head, router, usePage } from '@inertiajs/react';
 import { dashboard } from '@/routes';
 import MangaController from '@/actions/App/Http/Controllers/MangaController';
-const Ajout = () => {
+const Create = () => {
     const [fileName, setFileName] = useState("Choisir une image");
 
     const [preview, setPreview] = useState<string | null>(null);
@@ -101,4 +101,4 @@ const Ajout = () => {
     );
 };
 
-export default Ajout
+export default Create

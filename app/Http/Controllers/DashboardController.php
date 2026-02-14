@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Manga;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class DashboardController extends Controller
@@ -13,7 +14,7 @@ class DashboardController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $manga = Manga::all();
+        $manga = Auth::user()->mangas()->get();
         $count = Manga::count();
 
         return Inertia::render('dashboard', [

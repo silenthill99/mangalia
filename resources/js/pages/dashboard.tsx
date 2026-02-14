@@ -1,9 +1,9 @@
 import AppLayout from '@/layouts/app-layout';
-import { type BreadcrumbItem } from '@/types';
+import { Article, type BreadcrumbItem } from '@/types';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import React from 'react';
-import { adminDelete, ajout, edit, sujet } from '@/routes';
+import mangas from '@/routes/mangas';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -11,20 +11,12 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '/dashboard',
     },
 ];
-
-type ArticleProps = {
-    id: number;
-    path: string;
-    title: string;
-    price: number;
-}
-
 type FlashProps = {
     success: string;
 }
 
 export default function Dashboard() {
-    const {articles, flash} = usePage<{articles: ArticleProps[], flash: FlashProps}>().props
+    const {articles, flash} = usePage<{articles: Article[], flash: FlashProps}>().props
 
     const { delete: destroy } = useForm();
     return (
@@ -37,7 +29,7 @@ export default function Dashboard() {
                         {flash.success}
                     </p>
                 )}
-                <Link href={ajout()} className={"inline-block bg-accent-bis p-5 rounded-2xl mt-10 mb-20 text-white hover:bg-emerald-950 duration-300 w-42"}>
+                <Link href={mangas.create()} className={"inline-block bg-accent-bis p-5 rounded-2xl mt-10 mb-20 text-white hover:bg-emerald-950 duration-300 w-42"}>
                     Ajouter un article
                 </Link>
                 {articles.length > 0 ? (
@@ -61,13 +53,13 @@ export default function Dashboard() {
                                         <TableCell>{article.price}</TableCell>
                                         <TableCell>
                                             <ul className={"flex justify-center gap-2"}>
-                                                <li><Link href={sujet({ id: article.id })} className={"hover:underline"}>Voir</Link></li>
-                                                <li><Link href={edit({manga: article.id})} className={"hover:underline"}>Modifier</Link></li>
+                                                <li><Link href={mangas.show({ manga: article.id })} className={"hover:underline"}>Voir</Link></li>
+                                                <li><Link href={mangas.edit({manga: article.id})} className={"hover:underline"}>Modifier</Link></li>
                                                 <li>
                                                     <button
                                                         onClick={() => {
                                                             if (confirm(`Supprimer l'article "${article.title}" ?`)) {
-                                                                destroy(adminDelete({ id: article.id }).url);
+                                                                destroy(mangas.destroy({ id: article.id }).url);
                                                             }
                                                         }}
                                                         className="text-red-600 hover:underline cursor-pointer"

@@ -181,7 +181,7 @@ The `<Form>` component supports automatic resetting:
 
 - `resetOnError` - Reset form data when the request fails
 - `resetOnSuccess` - Reset form data when the request succeeds
-- `setDefaultsOnSuccess` - Update default values on success
+- `setDefaultsOnSuccess` - Edit default values on success
 
 Use the `search-docs` tool with a query of `form component resetting` for detailed guidance.
 

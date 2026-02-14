@@ -2,43 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreMangaRequest;
+use App\Http\Requests\UpdateMangaRequest;
 use App\Models\Manga;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class MangaController extends Controller
 {
-    public function ajout(): Response
+    public function create(): Response
     {
-        return Inertia::render('ajout');
+        return Inertia::render('mangas/create');
     }
 
-    public function store(Request $request)
+    public function store(StoreMangaRequest $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0',
-            'age' => 'required|string|max:255',
-            'description' => 'required|string',
-            'image' => 'required|image|max:8000',
-        ], [
-            'image.required' => "Tu dois choisir une image pour valider l'envoi du formulaire",
-        ]);
+        $data = $request->validated(['image.required' => "Tu dois choisir une image pour valider l'envoi du formulaire"]);
 
         $image = $request->file('image');
         $imageName = time().'_'.$image->getClientOriginalName(); // ex: 1717861245_cover.jpg
-        $path = $image->storeAs('images', $imageName, 'public');
+        $data["path"] = $image->storeAs('images', $imageName, 'public');
 
-        auth()->user()->mangas()->create([
-            'title' => $request->title,
-            'path' => $path,
-            'price' => $request->price,
-            'age' => $request->age,
-            'description' => $request->description,
-        ]);
+        auth()->user()->mangas()->create($data);
 
         return redirect()->route('dashboard')->with('success', 'Manga ajouté avec succès.');
 
@@ -54,20 +42,13 @@ class MangaController extends Controller
 
     public function edit(Manga $manga): Response
     {
-        return Inertia::render('update', ['article' => $manga]);
+        Gate::authorize('update', $manga);
+        return Inertia::render('mangas/edit', ['article' => $manga]);
     }
 
-    public function update(Manga $manga, Request $request): RedirectResponse
+    public function update(Manga $manga, UpdateMangaRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0',
-            'age' => 'required|string|max:255',
-            'description' => 'required|string',
-            'image' => 'nullable|image|max:8000',
-        ]);
-
-//        $oldImagePath = null;
+        $validated = $request->validated();
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -78,19 +59,15 @@ class MangaController extends Controller
 
         $manga->update($validated);
 
-//        if ($oldImagePath) {
-//            $this->deleteImage($oldImagePath);
-//        }
-
         return redirect()->route('dashboard')->with('success', 'Manga mis à jour.');
     }
 
-    public function show(Manga $art)
+    public function show(Manga $manga): Response
     {
         $menu = Manga::all();
 
-        return Inertia::render('sujet', [
-            'article' => $art,
+        return Inertia::render('mangas/show', [
+            'article' => $manga,
             'menu' => $menu,
         ]);
     }

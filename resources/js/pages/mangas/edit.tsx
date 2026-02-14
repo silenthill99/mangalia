@@ -1,45 +1,21 @@
-import React, { FormEvent, useState } from 'react';
-import { Head, router, useForm, usePage } from '@inertiajs/react';
-import { dashboard, update } from '@/routes';
+import React, { useState } from 'react';
+import { Form, Head, router, usePage } from '@inertiajs/react';
+import { dashboard } from '@/routes';
+import MangaController from '@/actions/App/Http/Controllers/MangaController';
+import { Article } from '@/types';
 
-type ArticleProps = {
-    id: number;
-    title: string;
-    price: number;
-    age: string;
-    description: string;
-    path: string; // chemin actuel de l'image
-};
-
-const Update = () => {
-    const { article } = usePage<{ article: ArticleProps }>().props;
+const Edit = () => {
+    const { article } = usePage<{ article: Article }>().props;
 
     const [fileName, setFileName] = useState("Choisir une image");
     const [preview, setPreview] = useState<string | null>("/storage/" + article.path);
-
-    const { data, setData , put, reset} = useForm({
-        title: article.title,
-        price: article.price,
-        age: article.age,
-        description: article.description,
-        image: null as File | null,
-    });
-
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        put(update({id: article.id}).url, {
-            forceFormData: true,
-            preserveScroll: true,
-            onFinish: () => reset()
-        })
-    };
 
     const { errors } = usePage<{errors: Record<string, string>}>().props;
 
     return (
         <div className="container mx-auto flex min-h-screen items-center justify-center">
-            <Head title="Update" />
-            <form onSubmit={handleSubmit} action="" method="put"
+            <Head title="Edit" />
+            <Form {...MangaController.edit.form({manga: article})} resetOnSuccess resetOnError
                   className={'my-5 w-9/10 rounded border p-5 md:w-auto'}>
                 <div className={'flex justify-between'}>
                     <label htmlFor="title">Ajouter un titre</label>
@@ -49,8 +25,6 @@ const Update = () => {
                         id={'title'}
                         placeholder={"Titre de l'article"}
                         className={'ml-2 border focus:outline-none text-right pr-2'}
-                        value={data.title}
-                        onChange={(e) => setData('title', e.target.value)}
                         required
                     />
                 </div>
@@ -66,7 +40,6 @@ const Update = () => {
                         onChange={(e) => {
                             const file = e.target.files?.[0];
                             if (file) {
-                                setData('image', file);
                                 setPreview(URL.createObjectURL(file));
                                 setFileName(file.name);
                             }
@@ -89,10 +62,6 @@ const Update = () => {
                         id="price"
                         placeholder={"Prix de l'article"}
                         className={'ml-2 border focus:outline-none text-right'}
-                        value={data.price}
-                        onChange={(e) => {
-                            setData('price', parseFloat(e.target.value));
-                        }}
                         required
                     />
                 </div>
@@ -101,8 +70,6 @@ const Update = () => {
                     name="age"
                     id="age"
                     className={'border w-full text-center'}
-                    value={data.age}
-                    onChange={(e) => setData('age', e.target.value)}
                     required
                 >
                     <option value="" disabled>--Choisissez une valeur---</option>
@@ -118,8 +85,6 @@ const Update = () => {
                     name="description"
                     id="description"
                     className={"border focus:outline-none resize-none w-full lg:w-2xl h-100 text-justify p-2"}
-                    value={data.description}
-                    onChange={(e) => setData("description", e.target.value)}
                     required
                 ></textarea><br />
                 <div className={'flex justify-between'}>
@@ -130,9 +95,9 @@ const Update = () => {
                         }
                     }}>Annuler</button>
                 </div>
-            </form>
+            </Form>
         </div>
     )
 }
 
-export default Update
+export default Edit

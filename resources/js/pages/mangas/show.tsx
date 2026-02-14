@@ -1,24 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Head, Link, usePage } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
-import { SharedData } from '@/types';
-import { dashboard, home, login, register, sujet } from '@/routes';
+import { Article, SharedData } from '@/types';
+import { dashboard, home, login, register } from '@/routes';
 import storage from '@/routes/storage';
+import mangas from '@/routes/mangas';
 
-type ArticleProps = {
-    id: number;
-    title: string;
-    path: string;
-    price: number;
-    description: string;
-    age: string
-    created_at: string;
-    updated_at: string;
-}
+const Show = () => {
 
-const Sujet = () => {
-
-    const  { auth, article, menu } = usePage<SharedData & {article : ArticleProps, menu: ArticleProps[]}>().props;
+    const  { auth, article, menu } = usePage<SharedData & {article : Article, menu: Article[]}>().props;
 
     const [showMenu, setShowMenu] = useState(false)
 
@@ -50,7 +40,7 @@ const Sujet = () => {
                     <ul>
                         {menu.map(({ id, title }) => (
                             <li key={id}>
-                                <Link href={sujet({ id: id })} className={`hover:underline ${id === article.id && "font-bold"}`}>{title}</Link>
+                                <Link href={mangas.show({manga: id})} className={`hover:underline ${id === article.id && "font-bold"}`}>{title}</Link>
                             </li>
                         ))}
                     </ul>
@@ -130,4 +120,4 @@ const Sujet = () => {
     );
 };
 
-export default Sujet;
+export default Show;

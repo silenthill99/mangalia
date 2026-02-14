@@ -1,5 +1,6 @@
 import { Head, Link, usePage } from '@inertiajs/react';
-import { dashboard, sujet } from '@/routes';
+import { dashboard } from '@/routes';
+import mangas from '@/routes/mangas';
 type Articles = {
     id: number;
     title: string;
@@ -33,7 +34,7 @@ export default function Welcome() {
                                 />
                                 <figcaption className={'flex min-h-1/4 flex-col justify-between p-5'}>
                                     <p className={'text-3xl'}>{article.title}</p>
-                                    <Link href={sujet({ id: article.id })}>Voir plus de détails</Link>
+                                    <Link href={mangas.show({ manga: article.id })}>Voir plus de détails</Link>
                                     <p className={'absolute top-5 right-3/4 left-0 bg-orange-500 text-center text-white'}>Prix : {article.price} €</p>
                                 </figcaption>
                             </figure>

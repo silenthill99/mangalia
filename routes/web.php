@@ -14,16 +14,12 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-Route::get('sujet/{art}', [MangaController::class, 'show'])->name('sujet');
-
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', DashboardController::class)->name('dashboard');
-    Route::delete('/admin-delete/{manga}', [MangaController::class, 'destroy'])->name('admin-delete');
-    Route::get('/ajout', [MangaController::class, 'ajout'])->name('ajout');
-    Route::post('/ajout', [MangaController::class, 'store'])->name('ajout.store');
-    Route::get('/update/{manga}', [MangaController::class, 'edit'])->name('edit');
-    Route::put('/update/{manga}', [MangaController::class, 'update'])->name('update');
+    Route::resource('mangas', MangaController::class)->except(['index', 'show']);
 });
+
+Route::resource('mangas', MangaController::class)->only(['show']);
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
