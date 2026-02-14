@@ -3,7 +3,7 @@ import { type BreadcrumbItem } from '@/types';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import React from 'react';
-import { adminDelete, ajout, sujet, update } from '@/routes';
+import { adminDelete, ajout, edit, sujet } from '@/routes';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -62,7 +62,7 @@ export default function Dashboard() {
                                         <TableCell>
                                             <ul className={"flex justify-center gap-2"}>
                                                 <li><Link href={sujet({ id: article.id })} className={"hover:underline"}>Voir</Link></li>
-                                                <li><Link href={update({id: article.id})} className={"hover:underline"}>Modifier</Link></li>
+                                                <li><Link href={edit({manga: article.id})} className={"hover:underline"}>Modifier</Link></li>
                                                 <li>
                                                     <button
                                                         onClick={() => {

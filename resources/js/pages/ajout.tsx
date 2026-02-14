@@ -1,42 +1,18 @@
-import React, { FormEvent, useState } from 'react';
-import { Head, router, useForm, usePage } from '@inertiajs/react';
-import { ajout, dashboard } from '@/routes';
-
-type FormProps = {
-    title: string;
-    image?: File | null;
-    price: number;
-    age: string,
-    description: string
-}
-
+import React, { useState } from 'react';
+import { Form, Head, router, usePage } from '@inertiajs/react';
+import { dashboard } from '@/routes';
+import MangaController from '@/actions/App/Http/Controllers/MangaController';
 const Ajout = () => {
-
-    const {data, setData, post, reset} = useForm<Required<FormProps>>({
-        title: "",
-        image: null as File | null,
-        price: 0,
-        age: "",
-        description: ""
-    })
-
     const [fileName, setFileName] = useState("Choisir une image");
 
     const [preview, setPreview] = useState<string | null>(null);
-    function handleSubmit(e : FormEvent<HTMLFormElement>) {
-        e.preventDefault();
-        post(ajout().url, {
-            forceFormData: true,
-            onFinish: () => reset()
-        })
-    }
 
     const { errors } = usePage<{errors: Record<string, string>}>().props;
 
     return (
         <div className={'container mx-auto flex min-h-screen items-center justify-center'}>
             <Head title={'Ajouter un article'} />
-            <form onSubmit={handleSubmit} action="" method="post" className={'my-5 w-9/10 rounded border border-gray-300 p-5 md:w-auto'}>
+            <Form {...MangaController.store.form()} resetOnSuccess resetOnError className={'my-5 w-9/10 rounded border border-gray-300 p-5 md:w-auto'}>
                 <div className={"flex justify-between"}>
                     <label htmlFor="title">Ajouter un titre</label>
                     <input
@@ -45,8 +21,6 @@ const Ajout = () => {
                         id={'title'}
                         placeholder={'Titre de l\'article'}
                         className={'ml-2 border focus:outline-none text-right pr-2'}
-                        value={data.title}
-                        onChange={(e) => setData('title', e.target.value)}
                         required
                     />
                 </div>
@@ -63,7 +37,6 @@ const Ajout = () => {
                             onChange={(e) => {
                                 const file = e.target.files?.[0];
                                 if (file) {
-                                    setData('image', file);
                                     setPreview(URL.createObjectURL(file));
                                     setFileName(file.name);
                                 }
@@ -88,10 +61,6 @@ const Ajout = () => {
                         id="price"
                         placeholder={'Prix de l\'article'}
                         className={'ml-2 border focus:outline-none text-right'}
-                        value={data.price}
-                        onChange={(e) => {
-                            setData('price', parseFloat(e.target.value));
-                        }}
                         required
                     />
                 </div>
@@ -101,8 +70,6 @@ const Ajout = () => {
                     name="age"
                     id="age"
                     className={'w-full text-center border focus:outline-none'}
-                    value={data.age}
-                    onChange={(e) => setData('age', e.target.value)}
                     required
                 >
                     <option value="" disabled>--Choisissez une valeur---</option>
@@ -118,8 +85,6 @@ const Ajout = () => {
                     name="description"
                     id="description"
                     className={"border focus:outline-none resize-none w-full lg:w-2xl h-100 text-justify p-2"}
-                    value={data.description}
-                    onChange={(e) => setData("description", e.target.value)}
                     required
                 ></textarea><br/>
                 <div className={"flex justify-between"}>
@@ -131,7 +96,7 @@ const Ajout = () => {
                         }
                     }}>Annuler</button>
                 </div>
-            </form>
+            </Form>
         </div>
     );
 };
