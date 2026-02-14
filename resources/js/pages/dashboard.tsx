@@ -1,5 +1,5 @@
 import AppLayout from '@/layouts/app-layout';
-import { Article, type BreadcrumbItem } from '@/types';
+import { type BreadcrumbItem, Manga } from '@/types';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import React from 'react';
@@ -16,7 +16,7 @@ type FlashProps = {
 }
 
 export default function Dashboard() {
-    const {articles, flash} = usePage<{articles: Article[], flash: FlashProps}>().props
+    const {articles, flash} = usePage<{articles: Manga[], flash: FlashProps}>().props
 
     const { delete: destroy } = useForm();
     return (

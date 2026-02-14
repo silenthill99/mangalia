@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Head, Link, usePage } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
-import { Article, SharedData } from '@/types';
+import { Manga, SharedData } from '@/types';
 import { dashboard, home, login, register } from '@/routes';
 import storage from '@/routes/storage';
 import mangas from '@/routes/mangas';
 
 const Show = () => {
 
-    const  { auth, article, menu } = usePage<SharedData & {article : Article, menu: Article[]}>().props;
+    const  { auth, article, menu } = usePage<SharedData & {article : Manga, menu: Manga[]}>().props;
 
     const [showMenu, setShowMenu] = useState(false)
 

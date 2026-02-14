@@ -2,102 +2,126 @@ import React, { useState } from 'react';
 import { Form, Head, router, usePage } from '@inertiajs/react';
 import { dashboard } from '@/routes';
 import MangaController from '@/actions/App/Http/Controllers/MangaController';
-import { Article } from '@/types';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { Manga } from '@/types';
 
 const Edit = () => {
-    const { article } = usePage<{ article: Article }>().props;
+    const { article } = usePage<{ article: Manga }>().props;
 
     const [fileName, setFileName] = useState("Choisir une image");
     const [preview, setPreview] = useState<string | null>("/storage/" + article.path);
 
-    const { errors } = usePage<{errors: Record<string, string>}>().props;
-
     return (
         <div className="container mx-auto flex min-h-screen items-center justify-center">
             <Head title="Edit" />
-            <Form {...MangaController.edit.form({manga: article})} resetOnSuccess resetOnError
-                  className={'my-5 w-9/10 rounded border p-5 md:w-auto'}>
-                <div className={'flex justify-between'}>
-                    <label htmlFor="title">Ajouter un titre</label>
-                    <input
-                        type="text"
-                        name={'title'}
-                        id={'title'}
-                        placeholder={"Titre de l'article"}
-                        className={'ml-2 border focus:outline-none text-right pr-2'}
-                        required
-                    />
-                </div>
-                <br />
-                <label htmlFor="image"
-                       className={'bg-accent-bis inline-block cursor-pointer rounded p-5 text-white shadow w-full text-center'}>
-                    <span>{fileName}</span>
-                    <input
-                        type="file"
-                        name="image"
-                        id="image"
-                        accept={'image/*'}
-                        onChange={(e) => {
-                            const file = e.target.files?.[0];
-                            if (file) {
-                                setPreview(URL.createObjectURL(file));
-                                setFileName(file.name);
-                            }
-                        }}
-                        className={'hidden'}
-                    />
-                </label>
-                {preview && (
-                    <img src={preview} alt={"Preview"} className={"max-w-full lg:max-w-2xl mt-5 rounded"}/>
+            <Form
+                {...MangaController.update.form({ manga: article })}
+                resetOnSuccess
+                className={'my-5 w-9/10 rounded border p-5 md:w-auto'}
+            >
+                {({ errors }) => (
+                    <>
+                        <div className={'flex items-center justify-between'}>
+                            <Label htmlFor="title">Ajouter un titre</Label>
+                            <Input
+                                type="text"
+                                name={'title'}
+                                id={'title'}
+                                placeholder={"Titre de l'article"}
+                                className={'ml-2 w-min border pr-2 text-right focus:outline-none'}
+                                defaultValue={article.title}
+                                required
+                            />
+                        </div>
+                        <br />
+                        <Label
+                            htmlFor="image"
+                            className={'bg-accent-bis inline-block w-full cursor-pointer rounded p-5 text-center text-white shadow'}
+                        >
+                            <span>{fileName}</span>
+                            <input
+                                type="file"
+                                name="image"
+                                id="image"
+                                accept={'image/*'}
+                                onChange={(e) => {
+                                    const file = e.target.files?.[0];
+                                    if (file) {
+                                        setPreview(URL.createObjectURL(file));
+                                        setFileName(file.name);
+                                    }
+                                }}
+                                className={'hidden'}
+                            />
+                        </Label>
+                        {preview && <img src={preview} alt={'Preview'} className={'mt-5 max-w-full rounded lg:max-w-2xl'} />}
+                        {errors.image && <p className={'text-red-600'}>{errors.image}</p>}
+                        <br />
+                        <div className={'flex justify-between items-center'}>
+                            <Label htmlFor="note">Note sur 20</Label>
+                            <Input
+                                type="number"
+                                name="note"
+                                id="note"
+                                placeholder={"Note"}
+                                className={'w-min ml-2 border text-right focus:outline-none'}
+                                defaultValue={article.note}
+                                required
+                            />
+                        </div>
+                        {errors.note && <p className={'text-red-600'}>{errors.note}</p>}
+                        <br />
+                        <Select name="age" defaultValue={article.age}>
+                            <SelectTrigger className={'w-full border text-center'}>
+                                <SelectValue placeholder={'--Choisissez une valeur--'} />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectItem value={'Tous publics'}>Tous publics</SelectItem>
+                                    <SelectItem value={'12 +'}>12 +</SelectItem>
+                                    <SelectItem value={'16 +'}>16 +</SelectItem>
+                                    <SelectItem value={'18 +'}>18 +</SelectItem>
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                        {errors.age && <p className={'text-red-600'}>{errors.age}</p>}
+                        <br />
+                        <br />
+                        <Label htmlFor="description">Résumé</Label>
+                        <br />
+                        <Textarea
+                            name="description"
+                            id="description"
+                            className={'h-100 w-full resize-none border p-2 text-justify focus:outline-none lg:w-2xl'}
+                            required
+                            defaultValue={article.description}
+                        />
+                        <br />
+                        <div className={'flex justify-between'}>
+                            <input
+                                type="submit"
+                                value="Valider"
+                                className={'cursor-pointer rounded bg-black p-2 text-white duration-300 hover:bg-gray-600 active:bg-gray-800'}
+                            />
+                            <button
+                                type={'button'}
+                                onClick={() => {
+                                    if (confirm('Voulez-vous continuer ? Toutes les modifications apportées seront perdues')) {
+                                        router.visit(dashboard());
+                                    }
+                                }}
+                            >
+                                Annuler
+                            </button>
+                        </div>
+                    </>
                 )}
-                {errors.image && (
-                    <p className={"text-red-600"}>{errors.image}</p>
-                )}
-                <br />
-                <div className={"flex justify-between"}>
-                    <label htmlFor="price">Prix</label>
-                    <input
-                        type="number"
-                        name="price"
-                        id="price"
-                        placeholder={"Prix de l'article"}
-                        className={'ml-2 border focus:outline-none text-right'}
-                        required
-                    />
-                </div>
-                <br />
-                <select
-                    name="age"
-                    id="age"
-                    className={'border w-full text-center'}
-                    required
-                >
-                    <option value="" disabled>--Choisissez une valeur---</option>
-                    <option value={'Tous publics'}>Tous publics</option>
-                    <option value={'12 +'}>12 +</option>
-                    <option value={'16 +'}>16 +</option>
-                    <option value={'18 +'}>18 +</option>
-                </select>
-                <br />
-                <br />
-                <label htmlFor="description">Résumé</label><br />
-                <textarea
-                    name="description"
-                    id="description"
-                    className={"border focus:outline-none resize-none w-full lg:w-2xl h-100 text-justify p-2"}
-                    required
-                ></textarea><br />
-                <div className={'flex justify-between'}>
-                    <input type="submit" value="Valider" className={'bg-black text-white p-2 rounded hover:bg-gray-600 active:bg-gray-800 cursor-pointer duration-300'} />
-                    <button type={"button"} onClick={() => {
-                        if (confirm("Voulez-vous continuer ? Toutes les modifications apportées seront perdues")) {
-                            router.visit(dashboard());
-                        }
-                    }}>Annuler</button>
-                </div>
             </Form>
         </div>
-    )
+    );
 }
 
 export default Edit

@@ -18,10 +18,11 @@ class MangaResource extends JsonResource
             'id' => $this->resource->id,
             'title' => $this->resource->title,
             'path' => $this->resource->path,
-            'price' => $this->resource->price,
+            'note' => $this->resource->note,
             'age' => $this->resource->age,
             'description' => $this->resource->description,
             'created_at' => $this->resource->created_at,
+            'updated_at' => $this->resource->updated_at,
             'user' => new UserResource($this->whenLoaded('user'))
         ];
     }

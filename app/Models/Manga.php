@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Manga extends Model
 {
     public $fillable = [
-        'user_id', 'title', 'path', 'price', 'age', 'description'
+        'user_id', 'title', 'path', 'note', 'age', 'description'
     ];
 
     public function user() {

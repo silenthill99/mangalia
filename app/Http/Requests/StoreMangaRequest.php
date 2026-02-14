@@ -24,7 +24,7 @@ class StoreMangaRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0',
+            'note' => 'required|numeric|min:0|max:20',
             'age' => 'required|string|max:255',
             'description' => 'required|string',
             'image' => 'required|image|max:8000',

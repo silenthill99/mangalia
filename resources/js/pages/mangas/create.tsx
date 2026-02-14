@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, Head, router, usePage } from '@inertiajs/react';
 import { dashboard } from '@/routes';
 import MangaController from '@/actions/App/Http/Controllers/MangaController';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 const Create = () => {
     const [fileName, setFileName] = useState("Choisir une image");
 
@@ -12,22 +13,26 @@ const Create = () => {
     return (
         <div className={'container mx-auto flex min-h-screen items-center justify-center'}>
             <Head title={'Ajouter un article'} />
-            <Form {...MangaController.store.form()} resetOnSuccess resetOnError className={'my-5 w-9/10 rounded border border-gray-300 p-5 md:w-auto'}>
-                <div className={"flex justify-between"}>
+            <Form
+                {...MangaController.store.form()}
+                resetOnSuccess
+                className={'my-5 w-9/10 rounded border border-gray-300 p-5 md:w-auto'}
+            >
+                <div className={'flex justify-between'}>
                     <label htmlFor="title">Ajouter un titre</label>
                     <input
                         type="text"
                         name={'title'}
                         id={'title'}
-                        placeholder={'Titre de l\'article'}
-                        className={'ml-2 border focus:outline-none text-right pr-2'}
+                        placeholder={"Titre de l'article"}
+                        className={'ml-2 border pr-2 text-right focus:outline-none'}
                         required
                     />
                 </div>
                 <br />
 
                 <div>
-                    <label htmlFor="image" className={'bg-accent-bis inline-block cursor-pointer rounded p-5 text-white shadow w-full text-center'}>
+                    <label htmlFor="image" className={'bg-accent-bis inline-block w-full cursor-pointer rounded p-5 text-center text-white shadow'}>
                         <span>{fileName}</span>
                         <input
                             type="file"
@@ -44,57 +49,64 @@ const Create = () => {
                             className={'hidden'}
                         />
                     </label>
-                    {preview && (
-                        <img src={preview} alt={"Preview"} className={"max-w-full lg:max-w-2xl mt-5 rounded"}/>
-                    )}
-                    {errors.image && (
-                        <p className={"text-red-600"}>{errors.image}</p>
-                    )}
+                    {preview && <img src={preview} alt={'Preview'} className={'mt-5 max-w-full rounded lg:max-w-2xl'} />}
+                    {errors.image && <p className={'text-red-600'}>{errors.image}</p>}
                 </div>
                 <br />
 
-                <div className={"flex justify-between"}>
+                <div className={'flex justify-between'}>
                     <label htmlFor="price">Prix</label>
                     <input
                         type="number"
                         name="price"
                         id="price"
-                        placeholder={'Prix de l\'article'}
-                        className={'ml-2 border focus:outline-none text-right'}
+                        placeholder={"Prix de l'article"}
+                        className={'ml-2 border text-right focus:outline-none'}
                         required
                     />
                 </div>
                 <br />
 
-                <select
-                    name="age"
-                    id="age"
-                    className={'w-full text-center border focus:outline-none'}
-                    required
-                >
-                    <option value="" disabled>--Choisissez une valeur---</option>
-                    <option value={'Tous publics'}>Tous publics</option>
-                    <option value={'12 +'}>12 +</option>
-                    <option value={'16 +'}>16 +</option>
-                    <option value={'18 +'}>18 +</option>
-                </select>
+                <Select name="age" required>
+                    <SelectTrigger className={'w-full border text-center focus:outline-none'}>
+                        <SelectValue placeholder={'--Choisissez une valeur--'} />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectGroup>
+                            <SelectItem value={'Tous publics'}>Tous publics</SelectItem>
+                            <SelectItem value={'12 +'}>12 +</SelectItem>
+                            <SelectItem value={'16 +'}>16 +</SelectItem>
+                            <SelectItem value={'18 +'}>18 +</SelectItem>
+                        </SelectGroup>
+                    </SelectContent>
+                </Select>
                 <br />
                 <br />
-                <label htmlFor="description">Résumé</label><br/>
+                <label htmlFor="description">Résumé</label>
+                <br />
                 <textarea
                     name="description"
                     id="description"
-                    className={"border focus:outline-none resize-none w-full lg:w-2xl h-100 text-justify p-2"}
+                    className={'h-100 w-full resize-none border p-2 text-justify focus:outline-none lg:w-2xl'}
                     required
-                ></textarea><br/>
-                <div className={"flex justify-between"}>
-                    <input type="submit" value="Valider"
-                           className={'bg-black text-white p-2 rounded hover:bg-gray-600 active:bg-gray-800 cursor-pointer duration-300'} />
-                    <button type={"button"} onClick={() => {
-                        if (confirm("Voulez-vous continuer ? Toutes les modifications apportées seront perdues")) {
-                            router.visit(dashboard());
-                        }
-                    }}>Annuler</button>
+                ></textarea>
+                <br />
+                <div className={'flex justify-between'}>
+                    <input
+                        type="submit"
+                        value="Valider"
+                        className={'cursor-pointer rounded bg-black p-2 text-white duration-300 hover:bg-gray-600 active:bg-gray-800'}
+                    />
+                    <button
+                        type={'button'}
+                        onClick={() => {
+                            if (confirm('Voulez-vous continuer ? Toutes les modifications apportées seront perdues')) {
+                                router.visit(dashboard());
+                            }
+                        }}
+                    >
+                        Annuler
+                    </button>
                 </div>
             </Form>
         </div>
