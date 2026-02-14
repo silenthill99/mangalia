@@ -42,21 +42,16 @@ class MangaController extends Controller
 
     }
 
-    function destroy ($id): RedirectResponse {
-        Manga::destroy($id);
+    function destroy (Manga $manga): RedirectResponse {
+        $manga->delete();
         return redirect()->back()->with('success', "Article supprimé");
     }
 
-    function edit($id) {
-        $article = Manga::findOrFail($id);
-
+    function edit(Manga $article) {
         return Inertia::render('update', ['article' => $article]);
     }
 
-    function update($id, Request $request) {
-
-        $manga = Manga::findOrFail($id);
-
+    function update(Manga $manga, Request $request) {
         // Validation
         $validated = $request->validate([
             'title' => 'required|string|max:255',
@@ -75,8 +70,6 @@ class MangaController extends Controller
         }
 
         $manga->update($validated);
-
-
 
         return redirect()->route('dashboard')->with('success', 'Manga mis à jour.');
     }

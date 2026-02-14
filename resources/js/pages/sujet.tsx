@@ -3,6 +3,7 @@ import { Head, Link, usePage } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { SharedData } from '@/types';
 import { dashboard, home, login, register, sujet } from '@/routes';
+import storage from '@/routes/storage';
 
 type ArticleProps = {
     id: number;
@@ -115,8 +116,8 @@ const Sujet = () => {
 
             {/*Panneau de droite*/}
 
-            <div className={"hidden lg:flex h-screen top-0 sticky p-5 flex-col items-center justify-center gap-10 bg-white dark:bg-black"}>
-                <img src={`/storage/${article.path}`} alt="" className={"w-full"}/>
+            <div className={"hidden lg:flex min-h-screen top-0 sticky p-5 flex-col items-center justify-center gap-10 bg-white dark:bg-black"}>
+                <img src={storage.local(article.path).url} alt="" className={"w-full"}/>
                 <h1>{article.title}</h1>
                 <p className={`font-bold ${article.age === "Tous publics" ? (
                     "text-green-700"
