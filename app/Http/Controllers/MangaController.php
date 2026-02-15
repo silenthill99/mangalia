@@ -21,11 +21,11 @@ class MangaController extends Controller
 
     public function store(StoreMangaRequest $request)
     {
-        $data = $request->validated(['image.required' => "Tu dois choisir une image pour valider l'envoi du formulaire"]);
+        $data = $request->safe()->except('image');
 
         $image = $request->file('image');
-        $imageName = time().'_'.$image->getClientOriginalName(); // ex: 1717861245_cover.jpg
-        $data["path"] = $image->storeAs('images', $imageName, 'public');
+        $imageName = time().'_'.$image->getClientOriginalName();
+        $data['path'] = $image->storeAs('images', $imageName, 'public');
 
         auth()->user()->mangas()->create($data);
 
@@ -44,6 +44,7 @@ class MangaController extends Controller
     public function edit(Manga $manga): Response
     {
         Gate::authorize('update', $manga);
+
         return Inertia::render('mangas/edit', ['article' => new MangaResource($manga)]);
     }
 

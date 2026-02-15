@@ -1,14 +1,10 @@
 import { Head, Link, usePage } from '@inertiajs/react';
 import { dashboard } from '@/routes';
 import mangas from '@/routes/mangas';
-type Articles = {
-    id: number;
-    title: string;
-    path: string;
-    price: number;
-}
+import { Manga } from '@/types';
+
 export default function Welcome() {
-    const { articles } = usePage<{articles: Articles[]}>().props;
+    const { articles } = usePage<{articles: Manga[]}>().props;
 
     return (
         <div className={'container mx-auto flex flex-col gap-5 p-10 3xl:block 3xl:px-0'}>
@@ -34,7 +30,7 @@ export default function Welcome() {
                                 <figcaption className={'flex min-h-1/4 flex-col justify-between p-5'}>
                                     <p className={'text-3xl'}>{article.title}</p>
                                     <Link href={mangas.show({ manga: article.id })}>Voir plus de détails</Link>
-                                    <p className={'absolute top-5 right-3/4 left-0 bg-orange-500 text-center text-white'}>Prix : {article.price} €</p>
+                                    <p className={'absolute top-5 right-3/5 left-0 bg-orange-500 text-center text-white text-sm p-1'}>Note : {article.note} / 20</p>
                                 </figcaption>
                             </figure>
                         ),

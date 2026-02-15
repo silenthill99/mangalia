@@ -30,4 +30,14 @@ class StoreMangaRequest extends FormRequest
             'image' => 'required|image|max:8000',
         ];
     }
+
+    /**
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'image.required' => "Tu dois choisir une image pour valider l'envoi du formulaire",
+        ];
+    }
 }
