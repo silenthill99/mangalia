@@ -163,3 +163,7 @@
         @apply bg-background text-foreground;
     }
 }
+
+@theme {
+    --breakpoint-3xl: 1600;
+}

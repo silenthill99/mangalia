@@ -11,17 +11,16 @@ export default function Welcome() {
     const { articles } = usePage<{articles: Articles[]}>().props;
 
     return (
-        <div className={'container mx-auto flex flex-col gap-5 p-10 lg:block lg:px-0'}>
+        <div className={'container mx-auto flex flex-col gap-5 p-10 3xl:block 3xl:px-0'}>
             <Head title="Page d'accueil">
                 <link rel="preconnect" href="https://fonts.bunny.net" />
                 <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
             </Head>
             <h1>Page d'accueil</h1>
-            <Link href={dashboard()} className={'inline-block rounded bg-gray-300 p-2 shadow duration-300 hover:bg-black hover:text-white'}>
+            <Link href={dashboard()} className={'inline-block rounded bg-gray-300 p-2 shadow duration-300 hover:bg-black hover:text-white w-35 3xl:w-auto'}>
                 Page admin
             </Link>
             <p>Bienvenue sur Mangalia, la plateforme de streaming n°1 au monde pour regarder des animés (Crunchyroll je t'ai à l'œil)</p>
-            {/*<Form />*/}
             <div className={'grid gap-10 pt-10 lg:grid-cols-4'}>
                 {articles.map(
                     (article, index) =>
