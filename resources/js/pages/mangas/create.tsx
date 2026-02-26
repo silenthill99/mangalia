@@ -21,7 +21,7 @@ const Create = () => {
                     <div className={'space-y-4'}>
                         <div className={'flex items-center justify-between'}>
                             <Label htmlFor="title">Ajouter un titre</Label>
-                            <div className={"text-right"}>
+                            <div className={'text-right'}>
                                 <Input
                                     type="text"
                                     name={'title'}
@@ -64,14 +64,15 @@ const Create = () => {
                                     name="note"
                                     id="note"
                                     placeholder={'Note sur 20'}
-                                    className={'w-auto border text-right focus:outline-none'}
+                                    className={'ml-auto w-auto border text-right focus:outline-none'}
                                 />
                                 <InputError message={errors.image} />
                             </div>
                         </div>
                         <div>
+                            <Label htmlFor={'age'}>Restriction d'age</Label>
                             <Select name="age">
-                                <SelectTrigger className={'w-full border text-center focus:outline-none'}>
+                                <SelectTrigger className={'w-full border text-center focus:outline-none'} id={'age'}>
                                     <SelectValue placeholder={'--Choisissez une valeur--'} />
                                 </SelectTrigger>
                                 <SelectContent>

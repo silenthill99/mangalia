@@ -13,7 +13,7 @@ export default function Welcome() {
                 <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
             </Head>
             <h1>Page d'accueil</h1>
-            <Link href={dashboard()} className={'inline-block rounded bg-gray-300 p-2 shadow duration-300 hover:bg-black hover:text-white w-35 3xl:w-auto'}>
+            <Link href={dashboard()} className={'inline-block rounded bg-gray-300 p-2 shadow duration-300 hover:bg-black hover:text-white mr-auto'}>
                 Page admin
             </Link>
             <p>Bienvenue sur Mangalia, la plateforme de streaming n°1 au monde pour regarder des animés (Crunchyroll je t'ai à l'œil)</p>

@@ -114,7 +114,7 @@ const Show = () => {
                 ) : (
                     "text-red-700"
                 )}`}>Restriction d'age : {article.age}</p>
-                <Button className={"bg-orange-600 p-2 text-white"}>Prix : {article.price} € {article.price > 40 && "(J'aime l'argent)"}</Button>
+                <Button className={"bg-orange-600 p-2 text-white"}>Note : {article.note} / 20</Button>
             </div>
         </div>
     );

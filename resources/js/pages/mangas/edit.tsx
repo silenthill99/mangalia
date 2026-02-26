@@ -72,8 +72,9 @@ const Edit = () => {
                             {errors.note && <p className={'text-red-600'}>{errors.note}</p>}
                         </div>
                         <div>
+                            <Label htmlFor={'age'}>Restriction d'age</Label>
                             <Select name="age" defaultValue={article.age}>
-                                <SelectTrigger className={'w-full border text-center'}>
+                                <SelectTrigger className={'w-full border text-center'} id={'age'}>
                                     <SelectValue placeholder={'--Choisissez une valeur--'} />
                                 </SelectTrigger>
                                 <SelectContent>
