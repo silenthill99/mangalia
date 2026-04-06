@@ -17,7 +17,7 @@ export default function Welcome() {
                 Page admin
             </Link>
             <p>Bienvenue sur Mangalia, la plateforme de streaming n°1 au monde pour regarder des animés (Crunchyroll je t'ai à l'œil)</p>
-            {articles.length >= 0 && (
+            {articles.length > 0 && (
                 <div className={'grid gap-10 pt-10 lg:grid-cols-4'}>
                     {articles.map(
                         (article, index) =>
