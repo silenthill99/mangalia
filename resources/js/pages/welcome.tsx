@@ -17,9 +17,9 @@ export default function Welcome() {
                 Page admin
             </Link>
             <p>Bienvenue sur Mangalia, la plateforme de streaming n°1 au monde pour regarder des animés (Crunchyroll je t'ai à l'œil)</p>
-            <div className={'grid gap-10 pt-10 lg:grid-cols-4'}>
-                {articles.length >= 0 && (
-                    articles.map(
+            {articles.length >= 0 && (
+                <div className={'grid gap-10 pt-10 lg:grid-cols-4'}>
+                    {articles.map(
                         (article, index) =>
                             article.path && (
                                 <figure key={index} className={'relative h-100 rounded-3xl shadow-xl duration-300 hover:scale-110 lg:h-200'}>
@@ -36,9 +36,9 @@ export default function Welcome() {
                                 </figure>
                             )
                         ,
-                    )
-                )}
-            </div>
+                    )}
+                </div>
+            )}
         </div>
     );
 }
