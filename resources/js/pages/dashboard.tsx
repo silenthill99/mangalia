@@ -39,7 +39,7 @@ export default function Dashboard() {
                                 <TableHead>id</TableHead>
                                 <TableHead>image</TableHead>
                                 <TableHead>Titre</TableHead>
-                                <TableHead>Prix (en €)</TableHead>
+                                <TableHead>Note sur 20</TableHead>
                                 <TableHead className={'text-center'}>Actions</TableHead>
                             </TableRow>
                         </TableHeader>
@@ -50,7 +50,7 @@ export default function Dashboard() {
                                         <TableCell>{article.id}</TableCell>
                                         <TableCell className={"w-30"}><img src={`/storage/${article.path.replace('public/', '')}`} alt={article.title} /></TableCell>
                                         <TableCell>{article.title}</TableCell>
-                                        <TableCell>{article.price}</TableCell>
+                                        <TableCell>{article.note} / 20</TableCell>
                                         <TableCell>
                                             <ul className={"flex justify-center gap-2"}>
                                                 <li><Link href={mangas.show({ manga: article.id })} className={"hover:underline"}>Voir</Link></li>
