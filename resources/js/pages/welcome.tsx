@@ -18,22 +18,25 @@ export default function Welcome() {
             </Link>
             <p>Bienvenue sur Mangalia, la plateforme de streaming n°1 au monde pour regarder des animés (Crunchyroll je t'ai à l'œil)</p>
             <div className={'grid gap-10 pt-10 lg:grid-cols-4'}>
-                {articles.map(
-                    (article, index) =>
-                        article.path && (
-                            <figure key={index} className={'relative h-100 rounded-3xl shadow-xl duration-300 hover:scale-110 lg:h-200'}>
-                                <img
-                                    src={`/storage/${article.path.replace('public/', '')}`}
-                                    alt={article.title}
-                                    className={'h-3/4 w-full rounded-t-3xl object-cover'}
-                                />
-                                <figcaption className={'flex min-h-1/4 flex-col justify-between p-5'}>
-                                    <p className={'text-3xl'}>{article.title}</p>
-                                    <Link href={mangas.show({ manga: article.id })}>Voir plus de détails</Link>
-                                    <p className={'absolute top-5 right-3/5 left-0 bg-orange-500 text-center text-white text-sm p-1'}>Note : {article.note} / 20</p>
-                                </figcaption>
-                            </figure>
-                        ),
+                {articles.length >= 0 && (
+                    articles.map(
+                        (article, index) =>
+                            article.path && (
+                                <figure key={index} className={'relative h-100 rounded-3xl shadow-xl duration-300 hover:scale-110 lg:h-200'}>
+                                    <img
+                                        src={`/storage/${article.path.replace('public/', '')}`}
+                                        alt={article.title}
+                                        className={'h-3/4 w-full rounded-t-3xl object-cover'}
+                                    />
+                                    <figcaption className={'flex min-h-1/4 flex-col justify-between p-5'}>
+                                        <p className={'text-3xl'}>{article.title}</p>
+                                        <Link href={mangas.show({ manga: article.id })}>Voir plus de détails</Link>
+                                        <p className={'absolute top-5 right-3/5 left-0 bg-orange-500 text-center text-white text-sm p-1'}>Note : {article.note} / 20</p>
+                                    </figcaption>
+                                </figure>
+                            )
+                        ,
+                    )
                 )}
             </div>
         </div>
