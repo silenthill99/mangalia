@@ -1,10 +1,10 @@
 import { Head, Link, usePage } from '@inertiajs/react';
 import { dashboard } from '@/routes';
 import mangas from '@/routes/mangas';
-import { Manga } from '@/types';
+import { Manga, SharedData } from '@/types';
 
 export default function Welcome() {
-    const { articles } = usePage<{articles: Manga[]}>().props;
+    const { auth, articles } = usePage<SharedData & {articles: Manga[]}>().props;
 
     return (
         <div className={'container mx-auto flex flex-col gap-5 p-10 3xl:block 3xl:px-0'}>
@@ -13,10 +13,12 @@ export default function Welcome() {
                 <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
             </Head>
             <h1>Page d'accueil</h1>
-            <Link href={dashboard()} className={'inline-block rounded bg-gray-300 p-2 shadow duration-300 hover:bg-black hover:text-white mr-auto'}>
-                Page admin
-            </Link>
-            <p>Bienvenue sur Mangalia, la plateforme de streaming n°1 au monde pour regarder des animés (Crunchyroll je t'ai à l'œil)</p>
+            {auth.user && (
+                <Link href={dashboard()} className={'inline-block rounded bg-gray-300 p-2 shadow duration-300 hover:bg-black hover:text-white mr-auto'}>
+                    Page admin
+                </Link>
+            )}
+            <p>Bienvenue sur Mangalia, plateforme de critiques d'animés et films d'animation japonais.</p>
             {articles.length > 0 && (
                 <div className={'grid gap-10 pt-10 lg:grid-cols-4'}>
                     {articles.map(
