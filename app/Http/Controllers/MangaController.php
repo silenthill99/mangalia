@@ -21,7 +21,7 @@ class MangaController extends Controller
 
     public function store(StoreMangaRequest $request)
     {
-        $data = $request->safe()->except('image');
+        $data = $request->validated();
 
         $image = $request->file('image');
         $imageName = time().'_'.$image->getClientOriginalName();
