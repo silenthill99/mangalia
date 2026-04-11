@@ -144,9 +144,9 @@ const Show = () => {
 
             {/*Panneau de droite*/}
 
-            <div className={"hidden lg:flex min-h-screen top-0 sticky p-5 flex-col items-center justify-center gap-10 bg-white dark:bg-black"}>
+            <div className={"hidden lg:flex min-h-screen top-0 sticky p-5 flex-col items-center gap-10 bg-white dark:bg-black"}>
                 <img src={storage.local(article.path).url} alt="" className={"w-full"}/>
-                <h1>{article.title}</h1>
+                <h1 className={"text-center"}>{article.title}</h1>
                 <p className={`font-bold ${article.age === "Tous publics" ? (
                     "text-green-700"
                 ) : (
