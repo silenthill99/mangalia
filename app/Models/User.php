@@ -4,6 +4,9 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -46,12 +49,23 @@ class User extends Authenticatable
         ];
     }
 
-    public function mangas()
+    public function mangas(): HasMany
     {
         return $this->hasMany(Manga::class);
     }
 
-    public function role() {
+    public function role(): BelongsTo
+    {
         return $this->belongsTo(Role::class);
+    }
+
+    public function commentaries(): HasMany
+    {
+        return $this->hasMany(Commentary::class);
+    }
+
+    public function commentaryReactions(): BelongsToMany
+    {
+        return $this->belongsToMany(Commentary::class, 'commentary_reactions');
     }
 }

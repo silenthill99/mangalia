@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMangaRequest;
 use App\Http\Requests\UpdateMangaRequest;
+use App\Http\Resources\CommentaryResource;
 use App\Http\Resources\MangaResource;
 use App\Models\Manga;
 use Illuminate\Http\RedirectResponse;
@@ -67,10 +68,13 @@ class MangaController extends Controller
     public function show(Manga $manga): Response
     {
         $menu = Manga::all();
+        $commentaries = $manga->commentaries()->orderBy('created_at', 'desc')->get();
+        $commentaries->load('user');
 
         return Inertia::render('mangas/show', [
             'article' => new MangaResource($manga),
             'menu' => MangaResource::collection($menu),
+            'commentaries' => CommentaryResource::collection($commentaries),
         ]);
     }
 

@@ -23,7 +23,8 @@ class MangaResource extends JsonResource
             'description' => $this->resource->description,
             'created_at' => $this->resource->created_at,
             'updated_at' => $this->resource->updated_at,
-            'user' => new UserResource($this->whenLoaded('user'))
+            'user' => new UserResource($this->whenLoaded('user')),
+            'commentaries' => CommentaryResource::collection($this->whenLoaded('commentaries')),
         ];
     }
 }

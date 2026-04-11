@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\CommentaryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MangaController;
-    use App\Http\Resources\MangaResource;
-    use App\Models\Manga;
+use App\Http\Resources\MangaResource;
+use App\Models\Manga;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -18,6 +19,7 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', DashboardController::class)->name('dashboard');
     Route::resource('mangas', MangaController::class)->except(['index', 'show']);
+    Route::post('commentaries/{manga}/create', [CommentaryController::class, 'store'])->name('commentaries.store');
 });
 
 Route::resource('mangas', MangaController::class)->only(['show']);

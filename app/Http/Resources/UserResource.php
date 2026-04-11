@@ -19,6 +19,8 @@ class UserResource extends JsonResource
             'email' => $this->resource->email,
             'name' => $this->resource->name,
             'mangas' => MangaResource::collection($this->whenLoaded('mangas')),
+            'commentaries' => CommentaryResource::collection($this->whenLoaded('commentaries')),
+            'commentaryReactions' => CommentaryResource::collection($this->whenLoaded('commentaryReactions')),
         ];
     }
 }

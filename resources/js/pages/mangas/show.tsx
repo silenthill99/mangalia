@@ -1,14 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Head, Link, usePage } from '@inertiajs/react';
+import { Head, Link, router, usePage } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
-import { Manga, SharedData } from '@/types';
+import { Commentary, Manga, SharedData } from '@/types';
 import { dashboard, home, login, register } from '@/routes';
 import storage from '@/routes/storage';
 import mangas from '@/routes/mangas';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import axios from 'axios';
+import CommentaryController from '@/actions/App/Http/Controllers/CommentaryController';
+import { Separator } from '@/components/ui/separator';
 
 const Show = () => {
 
-    const  { auth, article, menu } = usePage<SharedData & {article : Manga, menu: Manga[]}>().props;
+    const  { auth, article, menu, commentaries } = usePage<SharedData & {article : Manga, menu: Manga[], commentaries: Commentary[]}>().props;
 
     const [showMenu, setShowMenu] = useState(false)
 
@@ -27,6 +32,17 @@ const Show = () => {
     }, []);
 
     const [dark, setDark] = useState(false)
+
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault()
+        const form = new FormData(e.currentTarget)
+        try {
+            await axios.post(CommentaryController.store(article).url, Object.fromEntries(form))
+            router.reload({only: ['commentaries']})
+        } catch (e) {
+            console.error(e)
+        }
+    }
 
     return (
         <div className={`grid lg:grid-cols-[25%_50%_25%] ${dark && "dark"} dark:bg-black dark:text-white`}>
@@ -101,6 +117,24 @@ const Show = () => {
                             minute: '2-digit',
                         })}</p>
                     )}
+                </div>
+                <Separator/>
+                {/*Section de commentaires*/}
+                <div className={"space-y-2"}>
+                    <h2>Commentaires</h2>
+                    <form onSubmit={handleSubmit}>
+                        <Label htmlFor={"content"}>Ajouter un commentaire</Label>
+                        <Textarea id={'content'} name={"content"} className={"resize-none"} disabled={!auth.user}/>
+                        <Button>Envoyer</Button>
+                    </form>
+                    <div className={"space-y-4"}>
+                        {commentaries.map((comment) => (
+                            <div key={comment.id}>
+                                <p className={"font-bold"}>{comment.user.name}</p>
+                                <p>{comment.content}</p>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </section>
 

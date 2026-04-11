@@ -18,7 +18,7 @@ export default function Welcome() {
                     Page admin
                 </Link>
             )}
-            <p>Bienvenue sur Mangalia, plateforme de critiques d'animés et films d'animation japonais.</p>
+            <p>Mangalia — Partagez vos critiques d'animés et films d'animation japonais.</p>
             {articles.length > 0 && (
                 <div className={'grid gap-10 pt-10 lg:grid-cols-4'}>
                     {articles.map(

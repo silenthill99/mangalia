@@ -41,6 +41,7 @@ export interface User {
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
     articles: Manga[];
+    commentaries: Commentary[];
 }
 
 export interface Manga {
@@ -54,4 +55,13 @@ export interface Manga {
     created_at: string;
     updated_at: string;
     user: User;
+    commentaries: Commentary[]
+}
+
+export interface Commentary {
+    id: number;
+    user: User;
+    manga: Manga;
+    users: User[];
+    content: string;
 }

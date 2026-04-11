@@ -81,6 +81,9 @@
     h1 {
         @apply text-5xl font-semibold py-5;
     }
+    h2 {
+        @apply text-4xl font-semibold py-5;
+    }
 }
 
 :root {
