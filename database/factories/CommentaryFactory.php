@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Manga;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,9 @@ class CommentaryFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            "user_id" => User::factory()->create(),
+            "manga_id" => Manga::findOrFail(1),
+            "content" => $this->faker->paragraph(),
         ];
     }
 }

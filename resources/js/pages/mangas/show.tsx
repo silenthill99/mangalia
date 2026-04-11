@@ -8,12 +8,12 @@ import mangas from '@/routes/mangas';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import axios from 'axios';
-import CommentaryController from '@/actions/App/Http/Controllers/CommentaryController';
+import CommentaryController from "@/actions/App/Http/Controllers/CommentaryController";
 import { Separator } from '@/components/ui/separator';
 
 const Show = () => {
 
-    const  { auth, article, menu, commentaries } = usePage<SharedData & {article : Manga, menu: Manga[], commentaries: Commentary[]}>().props;
+    const  { auth, article, menu, commentaries, is_admin } = usePage<SharedData & {article : Manga, menu: Manga[], commentaries: Commentary[]}>().props;
 
     const [showMenu, setShowMenu] = useState(false)
 
@@ -84,7 +84,7 @@ const Show = () => {
 
             {/*Panneau central*/}
 
-            <section className={"lg:border-x min-h-screen px-5 lg:px-20 py-20 relative flex flex-col justify-between"}>
+            <section className={"lg:border-x min-h-screen px-5 lg:px-20 py-20 relative flex flex-col gap-8"}>
                 <div>
                     <div className={'lg:hidden flex flex-col gap-5'}>
                         <h1 className={'py-0'}>{article.title}</h1>
@@ -119,19 +119,23 @@ const Show = () => {
                     )}
                 </div>
                 <Separator/>
+
                 {/*Section de commentaires*/}
-                <div className={"space-y-2"}>
+                <div className={"space-y-6"}>
                     <h2>Commentaires</h2>
                     <form onSubmit={handleSubmit}>
                         <Label htmlFor={"content"}>Ajouter un commentaire</Label>
                         <Textarea id={'content'} name={"content"} className={"resize-none"} disabled={!auth.user}/>
                         <Button>Envoyer</Button>
                     </form>
-                    <div className={"space-y-4"}>
+                    <div className={"space-y-4 divide-y"}>
                         {commentaries.map((comment) => (
                             <div key={comment.id}>
                                 <p className={"font-bold"}>{comment.user.name}</p>
                                 <p>{comment.content}</p>
+                                {auth.user && (auth.user.id === comment.user.id || is_admin) && (
+                                    <Link href={CommentaryController.destroy(comment)} className={"text-red-400 hover:underline"}>Supprimer</Link>
+                                )}
                             </div>
                         ))}
                     </div>

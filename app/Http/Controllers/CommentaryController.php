@@ -8,6 +8,7 @@ use App\Models\Commentary;
 use App\Models\Manga;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class CommentaryController extends Controller
 {
@@ -67,6 +68,7 @@ class CommentaryController extends Controller
      */
     public function destroy(Commentary $commentary)
     {
-        //
+        Gate::authorize('delete', $commentary);
+        $commentary->delete();
     }
 }

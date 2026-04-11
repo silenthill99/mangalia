@@ -19,7 +19,8 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', DashboardController::class)->name('dashboard');
     Route::resource('mangas', MangaController::class)->except(['index', 'show']);
-    Route::post('commentaries/{manga}/create', [CommentaryController::class, 'store'])->name('commentaries.store');
+    Route::post('commentaries/{manga}/create', [CommentaryController::class, 'store'])->middleware('throttle:10,1')->name('commentaries.store');
+    Route::delete('commentaries/{commentary}/destroy', [CommentaryController::class, 'destroy'])->name('commentaries.destroy');
 });
 
 Route::resource('mangas', MangaController::class)->only(['show']);

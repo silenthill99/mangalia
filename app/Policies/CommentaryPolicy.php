@@ -44,7 +44,7 @@ class CommentaryPolicy
      */
     public function delete(User $user, Commentary $commentary): bool
     {
-        return false;
+        return $commentary->user()->is($user) || $user->can('isAdmin');
     }
 
     /**
