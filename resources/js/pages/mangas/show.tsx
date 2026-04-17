@@ -35,6 +35,10 @@ const Show = () => {
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
+        if (!auth.user) {
+            router.visit(login())
+            return
+        }
         const form = new FormData(e.currentTarget)
         try {
             await axios.post(CommentaryController.store(article).url, Object.fromEntries(form))

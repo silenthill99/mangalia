@@ -13,19 +13,6 @@ use Illuminate\Support\Facades\Gate;
 class CommentaryController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Manga $manga, User $user) {}
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreCommentaryRequest $request, Manga $manga)
@@ -37,14 +24,6 @@ class CommentaryController extends Controller
         $commentary->save();
 
         return response()->json($commentary);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Commentary $commentary)
-    {
-        //
     }
 
     /**
