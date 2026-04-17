@@ -49,5 +49,6 @@ class CommentaryController extends Controller
     {
         Gate::authorize('delete', $commentary);
         $commentary->delete();
+        return response()->noContent();
     }
 }
