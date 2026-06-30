@@ -12,8 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('mangas', function (Blueprint $table) {
-            $table->string('slug')->unique()->after('title');
+            if (! Schema::hasColumn('mangas', 'slug')) {
+                $table->string('slug')->after('title');
+            }
         });
+
+        $hasUniqueSlug = collect(Schema::getIndexes('mangas'))
+            ->contains(fn (array $index): bool => $index['unique'] && in_array('slug', $index['columns']));
+
+        if (! $hasUniqueSlug) {
+            Schema::table('mangas', function (Blueprint $table) {
+                $table->unique('slug');
+            });
+        }
     }
 
     /**
