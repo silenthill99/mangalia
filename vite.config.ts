@@ -17,7 +17,7 @@ export default defineConfig({
             formVariants: true
         })
     ],
-    esbuild: {
-        jsx: 'automatic',
-    }
+    // esbuild: {
+    //     jsx: 'automatic',
+    // }
 });

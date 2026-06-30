@@ -25,3 +25,10 @@ yarn-error.log
 resources/js/actions
 resources/js/routes
 resources/js/wayfinder
+
+.ai
+.claude
+.mcp.json
+boost.json
+CLAUDE.md
+.nvmrc
