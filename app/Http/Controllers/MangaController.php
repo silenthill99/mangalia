@@ -17,7 +17,11 @@ class MangaController extends Controller
 {
     public function create(): Response
     {
-        return Inertia::render('mangas/create');
+        $manga = new Manga;
+
+        return Inertia::render('mangas/formulaire', [
+            'manga' => new MangaResource($manga),
+        ]);
     }
 
     public function store(StoreMangaRequest $request)
@@ -25,8 +29,7 @@ class MangaController extends Controller
         $data = $request->validated();
 
         $image = $request->file('image');
-        $imageName = time().'_'.$image->getClientOriginalName();
-        $data['path'] = $image->storeAs('images', $imageName, 'public');
+        $data['path'] = $image->store('images', 'public');
 
         auth()->user()->mangas()->create($data);
 
@@ -46,7 +49,7 @@ class MangaController extends Controller
     {
         Gate::authorize('update', $manga);
 
-        return Inertia::render('mangas/edit', ['article' => new MangaResource($manga)]);
+        return Inertia::render('mangas/formulaire', ['manga' => new MangaResource($manga)]);
     }
 
     public function update(Manga $manga, UpdateMangaRequest $request): RedirectResponse
@@ -55,8 +58,7 @@ class MangaController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageName = time().'_'.$image->getClientOriginalName();
-            $validated['path'] = $image->storeAs('images', $imageName, 'public');
+            $validated['path'] = $image->store('images', 'public');
             $this->deleteImage($manga->path);
         }
 

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { router, useHttp, usePage } from '@inertiajs/react';
 import CommentaryController from '@/actions/App/Http/Controllers/CommentaryController';
 import { login } from '@/routes';
-import { Commentary, Manga, SharedData } from '@/types';
+import { Commentary, Manga } from '@/types';
 
 type Props = {
     article: Manga;
@@ -18,7 +18,7 @@ const Commentaries = ({ article, commentaries, is_admin }: Props) => {
     const { data, setData, errors, processing, post, delete: destroy } = useHttp({
         content: '',
     });
-    const { auth } = usePage<SharedData>().props;
+    const { auth } = usePage().props;
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();

@@ -1,12 +1,12 @@
 import { Head, Link, usePage } from '@inertiajs/react';
 import { dashboard, login, register } from '@/routes';
 import mangas from '@/routes/mangas';
-import { Manga, SharedData } from '@/types';
+import { Manga } from '@/types';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 
 export default function Welcome() {
-    const { auth, articles } = usePage<SharedData & { articles: Manga[] }>().props;
+    const { auth, articles } = usePage<{ articles: Manga[] }>().props;
 
     return (
         <div className={'relative min-h-screen overflow-hidden bg-zinc-950 text-zinc-100'}>
@@ -24,8 +24,8 @@ export default function Welcome() {
                     backgroundSize: '28px 28px',
                 }}
             />
-            <div aria-hidden className={'pointer-events-none absolute -top-40 -left-40 h-[28rem] w-[28rem] rounded-full bg-indigo-700/10 blur-3xl'} />
-            <div aria-hidden className={'pointer-events-none absolute top-40 right-0 h-[28rem] w-[28rem] rounded-full bg-violet-700/10 blur-3xl'} />
+            <div aria-hidden className={'pointer-events-none absolute -top-40 -left-40 h-112 w-md rounded-full bg-indigo-700/10 blur-3xl'} />
+            <div aria-hidden className={'pointer-events-none absolute top-40 right-0 h-112 w-md rounded-full bg-violet-700/10 blur-3xl'} />
 
             {/* Barre de navigation */}
             <header className={'sticky top-0 z-20 border-b border-white/10 bg-zinc-950/70 backdrop-blur-xl'}>
@@ -77,7 +77,7 @@ export default function Welcome() {
                 <div
                     aria-hidden
                     className={
-                        'pointer-events-none absolute top-4 left-1/2 -translate-x-1/2 text-[8rem] leading-none font-black text-white/[0.03] select-none md:text-[14rem]'
+                        'pointer-events-none absolute top-4 left-1/2 -translate-x-1/2 text-[8rem] leading-none font-black text-white/3 select-none md:text-[14rem]'
                     }
                 >
                     アニメ

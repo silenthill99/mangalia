@@ -1,5 +1,4 @@
 import AppLogoIcon from '@/components/app-logo-icon';
-import { type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { type PropsWithChildren } from 'react';
 import { home } from '@/routes';
@@ -10,7 +9,7 @@ interface AuthLayoutProps {
 }
 
 export default function AuthSplitLayout({ children, title, description }: PropsWithChildren<AuthLayoutProps>) {
-    const { name, quote } = usePage<SharedData>().props;
+    const { name, quote } = usePage().props;
 
     return (
         <div className="relative grid h-dvh flex-col items-center justify-center px-8 sm:px-0 lg:max-w-none lg:grid-cols-2 lg:px-0">
@@ -30,7 +29,7 @@ export default function AuthSplitLayout({ children, title, description }: PropsW
                 )}
             </div>
             <div className="w-full lg:p-8">
-                <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+                <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-87.5">
                     <Link href={home()} className="relative z-20 flex items-center justify-center lg:hidden">
                         <AppLogoIcon className="h-10 fill-current text-black sm:h-12" />
                     </Link>

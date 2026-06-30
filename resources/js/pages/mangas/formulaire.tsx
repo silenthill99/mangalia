@@ -1,36 +1,45 @@
 import MangaController from '@/actions/App/Http/Controllers/MangaController';
+import InputError from '@/components/input-error';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { dashboard } from '@/routes';
-import { Manga } from '@/types';
 import { Form, Head, router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
+import { Manga } from '@/types';
+import storage from '@/routes/storage';
 
-const Edit = () => {
-    const { article } = usePage<{ article: Manga }>().props;
-
+const Formulaire = () => {
     const [fileName, setFileName] = useState('Choisir une image');
-    const [preview, setPreview] = useState<string | null>('/storage/' + article.path);
+    const { manga } = usePage<{ manga: Manga }>().props;
+
+
+    const exist = !!manga.id;
+
+    const action = exist ? MangaController.update.form(manga) : MangaController.store.form();
+    const [preview, setPreview] = useState<string | null>(exist ? storage.local(manga.path).url : '');
+
 
     return (
-        <div className="container mx-auto flex min-h-screen items-center justify-center">
-            <Head title="Edit" />
-            <Form {...MangaController.update.form({ manga: article })} resetOnSuccess className={'my-5 w-9/10 rounded border p-5 md:w-auto'}>
+        <div className={'container mx-auto flex min-h-screen items-center justify-center'}>
+            <Head title={'Ajouter un article'} />
+            <Form {...action} resetOnSuccess className={'my-5 w-9/10 rounded border border-gray-300 p-5 md:w-auto'}>
                 {({ errors }) => (
                     <div className={'space-y-4'}>
                         <div className={'flex items-center justify-between'}>
                             <Label htmlFor="title">Ajouter un titre</Label>
-                            <Input
-                                type="text"
-                                name={'title'}
-                                id={'title'}
-                                placeholder={"Titre de l'article"}
-                                className={'ml-2 w-auto border pr-2 text-right focus:outline-none'}
-                                defaultValue={article.title}
-                                required
-                            />
+                            <div className={'text-right'}>
+                                <Input
+                                    type="text"
+                                    name={'title'}
+                                    id={'title'}
+                                    placeholder={"Titre de l'article"}
+                                    className={'w-auto border pr-2 text-right focus:outline-none'}
+                                    defaultValue={manga.title}
+                                />
+                                <InputError message={errors.title} />
+                            </div>
                         </div>
                         <div>
                             <Label
@@ -54,28 +63,27 @@ const Edit = () => {
                                 />
                             </Label>
                             {preview && <img src={preview} alt={'Preview'} className={'mt-5 max-w-full rounded lg:max-w-2xl'} />}
-                            {errors.image && <p className={'text-red-600'}>{errors.image}</p>}
+                            <InputError message={errors.image} />
                         </div>
-                        <div>
-                            <div className={'flex items-center justify-between'}>
-                                <Label htmlFor="note">Note sur 20</Label>
+                        <div className={'flex items-center justify-between'}>
+                            <Label htmlFor="note">Note sur 20</Label>
+                            <div className={'text-right'}>
                                 <Input
                                     type="number"
                                     name="note"
                                     id="note"
-                                    placeholder={'Note'}
-                                    className={'ml-2 w-min border text-right focus:outline-none'}
-                                    defaultValue={article.note}
-                                    required
+                                    placeholder={'Note sur 20'}
+                                    className={'ml-auto w-auto border text-right focus:outline-none'}
+                                    defaultValue={manga.note}
                                 />
+                                <InputError message={errors.image} />
                             </div>
-                            {errors.note && <p className={'text-red-600'}>{errors.note}</p>}
                         </div>
                         <div>
                             <Label htmlFor={'age'}>Restriction d'age</Label>
-                            <Select name="age" defaultValue={article.age}>
-                                <SelectTrigger className={'w-full border text-center'} id={'age'}>
-                                    <SelectValue placeholder={'--Choisissez une valeur--'} />
+                            <Select name="age" defaultValue={manga.age}>
+                                <SelectTrigger className={'w-full border text-center focus:outline-none'} id={'age'}>
+                                    <SelectValue placeholder={'--Choisissez une valeur--'}/>
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectGroup>
@@ -86,7 +94,7 @@ const Edit = () => {
                                     </SelectGroup>
                                 </SelectContent>
                             </Select>
-                            {errors.age && <p className={'text-red-600'}>{errors.age}</p>}
+                            <InputError message={errors.age} />
                         </div>
                         <div>
                             <Label htmlFor="description">Résumé</Label>
@@ -94,9 +102,9 @@ const Edit = () => {
                                 name="description"
                                 id="description"
                                 className={'h-100 w-full resize-none border p-2 text-justify focus:outline-none lg:w-2xl'}
-                                required
-                                defaultValue={article.description}
+                                defaultValue={manga.description}
                             />
+                            <InputError message={errors.description} />
                         </div>
                         <div className={'flex justify-between'}>
                             <input
@@ -122,4 +130,4 @@ const Edit = () => {
     );
 };
 
-export default Edit;
+export default Formulaire;

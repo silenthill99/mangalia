@@ -4,13 +4,13 @@ import { Separator } from '@/components/ui/separator';
 import { dashboard, home, login, register } from '@/routes';
 import mangas from '@/routes/mangas';
 import storage from '@/routes/storage';
-import { Commentary, Manga, SharedData } from '@/types';
+import { Commentary, Manga } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
 import React, { useEffect, useRef, useState } from 'react';
 import Commentaries from '@/components/commentaries';
 
 const Show = () => {
-    const { auth, article, menu, commentaries, is_admin } = usePage<SharedData & { article: Manga; menu: Manga[]; commentaries: Commentary[] }>()
+    const { auth, article, menu, commentaries, is_admin } = usePage<{ article: Manga; menu: Manga[]; commentaries: Commentary[] }>()
         .props;
 
     const [showMenu, setShowMenu] = useState(false);
