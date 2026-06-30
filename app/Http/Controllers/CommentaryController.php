@@ -6,7 +6,6 @@ use App\Http\Requests\StoreCommentaryRequest;
 use App\Http\Requests\UpdateCommentaryRequest;
 use App\Models\Commentary;
 use App\Models\Manga;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -49,6 +48,7 @@ class CommentaryController extends Controller
     {
         Gate::authorize('delete', $commentary);
         $commentary->delete();
+
         return response()->noContent();
     }
 }

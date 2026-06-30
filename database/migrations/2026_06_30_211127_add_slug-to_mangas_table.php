@@ -1,6 +1,5 @@
 <?php
 
-use App\Enum\RoleEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('roles', function (Blueprint $table) {
-            $table->id();
-            $table->enum('level', RoleEnum::cases());
-            $table->string('label');
-            $table->timestamps();
+        Schema::table('mangas', function (Blueprint $table) {
+            $table->string('slug')->unique()->after('title');
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('roles');
+        Schema::table('mangas', function (Blueprint $table) {
+            $table->dropColumn('slug');
+        });
     }
 };

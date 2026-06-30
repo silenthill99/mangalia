@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('mangas', function (Blueprint $table) {
             $table->id()->primary();
-            $table->foreignId("user_id")->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->string('title');
             $table->string('path');
             $table->decimal('price', 10, 0);

@@ -115,7 +115,7 @@ export default function Welcome() {
                                     article.path && (
                                         <Link
                                             key={article.id}
-                                            href={mangas.show({ manga: article.id })}
+                                            href={mangas.show(article)}
                                             className={
                                                 'group relative flex flex-col overflow-hidden rounded-xl bg-zinc-900/70 ring-1 ring-white/10 backdrop-blur transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-violet-900/30 hover:ring-violet-400/30'
                                             }

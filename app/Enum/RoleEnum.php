@@ -4,8 +4,8 @@ namespace App\Enum;
 
 enum RoleEnum: string
 {
-    case Membre = "Membre";
-    case Administrateur = "Administrateur";
+    case Membre = 'Membre';
+    case Administrateur = 'Administrateur';
 
     public function level(): int
     {

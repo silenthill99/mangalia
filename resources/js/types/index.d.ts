@@ -37,6 +37,7 @@ export interface User {
 export interface Manga {
     id: number;
     title: string;
+    slug: string;
     path: string;
     price: number;
     age: string;

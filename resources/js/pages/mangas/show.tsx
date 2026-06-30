@@ -72,10 +72,10 @@ const Show = () => {
                         <h2 className={'text-xs font-bold tracking-[0.2em] text-zinc-300 uppercase'}>Articles</h2>
                     </div>
                     <ul className={'flex flex-col gap-1 text-left'}>
-                        {menu.map(({ id, title }) => (
+                        {menu.map(({ id, title, slug }) => (
                             <li key={id}>
                                 <Link
-                                    href={mangas.show({ manga: id })}
+                                    href={mangas.show(slug)}
                                     className={`block truncate rounded-md px-3 py-1.5 text-sm transition-colors ${
                                         id === article.id
                                             ? 'bg-violet-500/10 font-bold text-violet-200 ring-1 ring-violet-400/30'

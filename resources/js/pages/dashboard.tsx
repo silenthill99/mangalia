@@ -53,13 +53,13 @@ export default function Dashboard() {
                                         <TableCell>{article.note} / 20</TableCell>
                                         <TableCell>
                                             <ul className={"flex justify-center gap-2"}>
-                                                <li><Link href={mangas.show({ manga: article.id })} className={"hover:underline"}>Voir</Link></li>
-                                                <li><Link href={mangas.edit({manga: article.id})} className={"hover:underline"}>Modifier</Link></li>
+                                                <li><Link href={mangas.show(article)} className={"hover:underline"}>Voir</Link></li>
+                                                <li><Link href={mangas.edit(article)} className={"hover:underline"}>Modifier</Link></li>
                                                 <li>
                                                     <button
                                                         onClick={() => {
                                                             if (confirm(`Supprimer l'article "${article.title}" ?`)) {
-                                                                destroy(mangas.destroy({ id: article.id }).url);
+                                                                destroy(mangas.destroy(article).url);
                                                             }
                                                         }}
                                                         className="text-red-600 hover:underline cursor-pointer"

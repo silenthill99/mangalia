@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model
 {
     protected $fillable = [
-        "level",
-        "label"
+        'level',
+        'label',
     ];
 
     protected function casts(): array
@@ -19,7 +19,8 @@ class Role extends Model
         ];
     }
 
-    public function users() {
+    public function users()
+    {
         return $this->hasMany(User::class);
     }
 }
