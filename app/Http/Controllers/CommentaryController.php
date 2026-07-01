@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCommentaryRequest;
 use App\Http\Requests\UpdateCommentaryRequest;
-use App\Http\Resources\CommentaryResource;
 use App\Models\Commentary;
 use App\Models\Manga;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +22,7 @@ class CommentaryController extends Controller
         $commentary->user()->associate($user);
         $commentary->save();
 
-        return new CommentaryResource($commentary);
+        return back();
     }
 
     /**
@@ -39,7 +38,10 @@ class CommentaryController extends Controller
      */
     public function update(UpdateCommentaryRequest $request, Commentary $commentary)
     {
-        //
+        Gate::authorize('update', $commentary);
+        $commentary->update($request->validated());
+
+        return back();
     }
 
     /**
@@ -50,6 +52,6 @@ class CommentaryController extends Controller
         Gate::authorize('delete', $commentary);
         $commentary->delete();
 
-        return response()->noContent();
+        return back();
     }
 }

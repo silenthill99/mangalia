@@ -56,4 +56,5 @@ export interface Commentary {
     users: User[];
     content: string;
     can_delete: boolean;
+    can_update: boolean;
 }

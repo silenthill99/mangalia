@@ -21,6 +21,7 @@ class CommentaryResource extends JsonResource
             'users' => UserResource::collection($this->whenLoaded('users')),
             'content' => $this->content,
             'can_delete' => $request->user()?->can('delete', $this->resource) ?? false,
+            'can_update' => $request->user()?->can('update', $this->resource) ?? false,
         ];
     }
 }

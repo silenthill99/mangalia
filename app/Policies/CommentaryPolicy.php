@@ -36,7 +36,7 @@ class CommentaryPolicy
      */
     public function update(User $user, Commentary $commentary): bool
     {
-        return false;
+        return $commentary->user()->is($user) || $user->can('isAdmin');
     }
 
     /**
