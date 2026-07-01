@@ -10,7 +10,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Commentaries from '@/components/commentaries';
 
 const Show = () => {
-    const { auth, article, menu, commentaries, is_admin } = usePage<{ article: Manga; menu: Manga[]; commentaries: Commentary[] }>()
+    const { auth, article, menu, commentaries } = usePage<{ article: Manga; menu: Manga[]; commentaries: Commentary[] }>()
         .props;
 
     const [showMenu, setShowMenu] = useState(false);
@@ -185,7 +185,7 @@ const Show = () => {
                         <span className={'h-8 w-1.5 rounded-full bg-linear-to-b from-indigo-500 to-violet-600'} />
                         <h2 className={'text-3xl font-black tracking-tight text-white md:text-4xl'}>Commentaires</h2>
                     </div>
-                    <Commentaries article={article} commentaries={commentaries} is_admin={is_admin || false} />
+                    <Commentaries article={article} commentaries={commentaries} />
                 </div>
             </section>
 

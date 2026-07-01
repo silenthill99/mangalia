@@ -11,10 +11,9 @@ import { Commentary, Manga } from '@/types';
 type Props = {
     article: Manga;
     commentaries: Commentary[];
-    is_admin: boolean;
 };
 
-const Commentaries = ({ article, commentaries, is_admin }: Props) => {
+const Commentaries = ({ article, commentaries }: Props) => {
     const { data, setData, errors, processing, post, delete: destroy } = useHttp({
         content: '',
     });
@@ -72,7 +71,7 @@ const Commentaries = ({ article, commentaries, is_admin }: Props) => {
                     </div>
                 ) : (
                     commentaries.map((comment) => {
-                        const canDelete = auth.user && (auth.user.id === comment.user.id || is_admin);
+                        const canDelete = comment.can_delete;
                         const initial = comment.user.name.charAt(0).toUpperCase();
 
                         return (

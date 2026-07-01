@@ -18,8 +18,9 @@ class CommentaryResource extends JsonResource
             'id' => $this->id,
             'user' => new UserResource($this->whenLoaded('user')),
             'manga' => new MangaResource($this->whenLoaded('manga')),
-            'users' => new MangaResource($this->whenLoaded('users')),
+            'users' => UserResource::collection($this->whenLoaded('users')),
             'content' => $this->content,
+            'can_delete' => $request->user()?->can('delete', $this->resource) ?? false,
         ];
     }
 }

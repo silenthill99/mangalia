@@ -55,4 +55,5 @@ export interface Commentary {
     manga: Manga;
     users: User[];
     content: string;
+    can_delete: boolean;
 }
