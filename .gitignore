@@ -32,3 +32,6 @@ resources/js/wayfinder
 boost.json
 CLAUDE.md
 .nvmrc
+.agents
+.codex
+AGENTS.md
