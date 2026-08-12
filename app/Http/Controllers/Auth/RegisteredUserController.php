@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Enum\RoleEnum;
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -37,7 +39,9 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = User::create([
+        $role = Role::where('code', RoleEnum::Membre->value)->firstOrFail();
+
+        $user = $role->users()->create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
