@@ -1,25 +1,18 @@
 import '../css/app.css';
 
 import { createInertiaApp } from '@inertiajs/react';
-import type { ResolvedComponent } from '@inertiajs/react';
 import { initializeTheme } from './hooks/use-appearance';
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import { createRoot } from 'react-dom/client';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
-const pages = import.meta.glob<{ default: ResolvedComponent }>(`./pages/**/*.tsx`);
 
 createInertiaApp({
     title: (title) => `${title} | ${appName}`,
-    resolve: (name) => resolvePageComponent(`./pages/${name}.tsx`, pages).then((module) => module.default),
-    setup({ el, App, props }) {
-        const root = createRoot(el);
-
-        root.render(<App {...props} />);
-    },
     progress: {
         color: '#4B5563',
     },
+    withApp: (app) => (
+        app
+    )
 });
 
 // This will set light / dark mode on load...

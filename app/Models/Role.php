@@ -15,7 +15,7 @@ class Role extends Model
     protected function casts(): array
     {
         return [
-            'label' => RoleEnum::class,
+            'code' => RoleEnum::class,
         ];
     }
 

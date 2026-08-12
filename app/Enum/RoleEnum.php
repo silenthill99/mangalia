@@ -4,8 +4,16 @@ namespace App\Enum;
 
 enum RoleEnum: string
 {
-    case Membre = 'Membre';
-    case Administrateur = 'Administrateur';
+    case Membre = 'member';
+    case Administrateur = 'admin';
+
+    public function label(): string
+    {
+        return match ($this) {
+            self::Membre => 'Membre',
+            self::Administrateur => 'Administrateur',
+        };
+    }
 
     public function level(): int
     {
